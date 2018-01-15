@@ -1,9 +1,12 @@
 package web.quiz.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
+@Entity
 public class Person {
-
+	@Id
 	private String id;             //编号
 	private String name;            //姓名
 	private String department;      //部憋

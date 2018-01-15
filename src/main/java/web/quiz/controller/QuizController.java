@@ -14,7 +14,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 import web.quiz.service.DBService;
-
+import web.quiz.model.*;
 @Controller
 public class QuizController {
     @Resource
