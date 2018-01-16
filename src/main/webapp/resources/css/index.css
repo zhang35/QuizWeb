@@ -1,0 +1,32 @@
+.headline {
+	color: #1abc9c;
+    margin-bottom: 5px;
+    padding: 40px 0;
+    text-align: center;
+    word-wrap: break-word;
+    margin-top: 2px;
+}
+#content {
+	border:
+    width: 500px;
+    margin: 0 50px 0 50px;
+	padding: 0 50px 20px 50px;
+	border: 3px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #9bb5c4 inset;
+    box-sizing: border-box;
+}
+p {
+	display: block;
+	font-size: 18px;
+    line-height: 1.72222;
+    margin: 0 0 15px;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+
+.link {
+    font-size: 20px;
+}

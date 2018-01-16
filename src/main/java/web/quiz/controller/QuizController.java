@@ -50,11 +50,11 @@ public class QuizController {
             String id = request.getParameter(paraName);
 
             String scoreStr = "";
-            //如果已经有以前的成绩，先加上
-//            Result res = DBUtil.GetResult(id);
-//            if (res != null){
-//                scoreStr = res.getScoreStr();
-//            }
+//            如果已经有以前的成绩，先加上
+            Person person = dbService.getPersonByID(id);
+            if (person.getScoreStr() != null){
+                scoreStr = person.getScoreStr();
+            }
             //剩下的读取questionNum个答案
             for (int i=0; i<questionNum; i++){
                 paraName=(String)enu.nextElement();
@@ -62,13 +62,11 @@ public class QuizController {
             }
 
             //每组得分末尾加#以示区分,如，甲同学给打的分#乙同学给打的分
-//            res.setId(id);
-//            res.setName(name);
-//            scoreStr += "#";
-//            res.setScoreStr(scoreStr);
-//
-//            //将成绩写入数据库中
-//            DBUtil.SaveToDB(res);
+            scoreStr += "#";
+            person.setScoreStr(scoreStr);
+
+            //将成绩写入数据库中
+            dbService.updatePerson(person);
 
             System.out.println(name + scoreStr);
         }
@@ -85,9 +83,7 @@ public class QuizController {
     @RequestMapping(value = "/loadJSON", method = RequestMethod.GET)
     @ResponseBody
     public byte[] loadJSON() throws IOException{
-        System.out.print("oooo");
         List<Person> persons = dbService.loadPersons();
-        System.out.print("kkkk");
         List<String> names = new ArrayList<String>();
         List<String> ids = new ArrayList<String>();
         for (Person p : persons){
@@ -95,9 +91,7 @@ public class QuizController {
             ids.add(p.getId());
         }
 
-        System.out.print("11111");
         List<Question> questions = dbService.loadQuestions();
-        System.out.print("22222");
 
         Quiz quiz = new Quiz();
         quiz.setNames(names);
