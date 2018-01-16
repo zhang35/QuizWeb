@@ -6,5 +6,5 @@ import java.util.List;
 public interface PersonDAO {
     public int save(Person person);
     public int delete(Person person);
-    public List<Person> loadPersons();
+    public List<Person> getAll();
 }

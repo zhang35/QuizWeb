@@ -1,6 +1,14 @@
 package web.quiz.model;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Question {
+    @Id
+    @GeneratedValue
 	int id;
 	private String title;
 	private String title_en; //存储题目英文名，用于生成表单的id

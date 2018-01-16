@@ -1,4 +1,5 @@
-package PACKAGE_NAME;
-
 public class Test {
+      public void test1() {
+          System.out.println("123");
+    }
 }
