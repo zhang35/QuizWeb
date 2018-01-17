@@ -1,3 +1,6 @@
+body{
+    text-align:center;
+}
 .headline {
 	color: #1abc9c;
     margin-bottom: 5px;
@@ -7,8 +10,8 @@
     margin-top: 2px;
 }
 #content {
-    width: 1500px;
-    margin: 0 50px 0 50px;
+    width: 1100px;
+    margin: 0 auto;
 	padding: 0 50px 20px 50px;
 	border: 3px solid #fff;
     border-radius: 10px;
@@ -29,3 +32,12 @@ p {
 .link {
     font-size: 20px;
 }
+.c1:after{content:"*";color:red}
+.c2:after{content:"!";width:20px;height:20px;border-radius:100%;color:#fff;background:red;}
+.c3{border:1px solid red;}
+/*这里有三个class*/
+/*你在要显示红色* 的时候，用c1*/
+/*要显示右边！时用c2*/
+/*要显示红色边框时用c3*/
+/*addClass(类名)    增加class*/
+/*removeClass(类名)  移出class*/

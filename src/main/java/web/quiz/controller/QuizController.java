@@ -22,7 +22,7 @@ public class QuizController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String defaultPage() {
-        return "index";
+        return "result";
     }
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index() {
@@ -35,6 +35,10 @@ public class QuizController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
         return "login";
+    }
+    @RequestMapping(value = "/result", method = RequestMethod.GET)
+    public String result() {
+        return "result";
     }
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String submit(HttpServletRequest request, HttpServletResponse response) {
