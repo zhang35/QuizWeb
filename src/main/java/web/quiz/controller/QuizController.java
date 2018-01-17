@@ -32,9 +32,12 @@ public class QuizController {
     public String vote() {
         return "vote";
     }
-
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+        return "login";
+    }
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public String result(HttpServletRequest request, HttpServletResponse response) {
+    public String submit(HttpServletRequest request, HttpServletResponse response) {
         //获得表单中所有值
         Enumeration<String> enu=request.getParameterNames();
 
@@ -81,7 +84,7 @@ public class QuizController {
             System.out.println(name + scoreStr);
         }
         //返回result界面,显示结果
-        return "result";
+        return "voteSuccess";
     }
 
     @RequestMapping(value = "/json", method = RequestMethod.GET)
