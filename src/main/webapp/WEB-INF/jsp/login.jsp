@@ -1,3 +1,4 @@
+<%@ page import="java.util.ResourceBundle" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -14,8 +15,11 @@
     <link href="resources/css/index.css" rel="stylesheet">
     <link href="resources/css/flat-ui.min.css" rel="stylesheet">
     <link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <%--properties文件放到resources文件夹--%>
+    <%ResourceBundle resourceBundle = ResourceBundle.getBundle("./META-INF/properties/myres"); %>
     <script type="text/javascript">
-
+    var pw = <%=resourceBundle.getString("pass")%>
+        alert(pw);
     </script>
 </head>
 <body>
