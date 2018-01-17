@@ -18,18 +18,9 @@ public class Person {
 	private Date mil_time;          //入伍时间
 	private Date par_time;          //入党时间
 	private String deg_of_edu;      //文化程度
-	private String scoreStr;		//成绩
 	//拼接字符串，每道题目之间用"#"隔开
 	// 如对zhang的投票结果：001#100#201
 	//则第一题0、1、2各一票，第二题0三票，第三题0一票、1两票
-
-	public String getScoreStr() {
-		return scoreStr;
-	}
-
-	public void setScoreStr(String scoreStr) {
-		this.scoreStr = scoreStr;
-	}
 
 	//set and get method
 	public String getId() {

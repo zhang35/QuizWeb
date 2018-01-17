@@ -50,23 +50,33 @@ public class QuizController {
             String id = request.getParameter(paraName);
 
             String scoreStr = "";
-//            如果已经有以前的成绩，先加上
-            Person person = dbService.getPersonByID(id);
-            if (person.getScoreStr() != null){
-                scoreStr = person.getScoreStr();
-            }
             //剩下的读取questionNum个答案
             for (int i=0; i<questionNum; i++){
                 paraName=(String)enu.nextElement();
                 scoreStr += request.getParameter(paraName);
             }
 
+//            如果已经有以前的成绩，先加上
+            Result oldResult = dbService.getResultByID(id);
+            if (oldResult != null){
+                String oldReslutStr = oldResult.getScoreStr();
+                System.out.println(oldReslutStr);
+                System.out.println("kkkkk");
+                if (oldReslutStr != null)
+                    System.out.println("oooooo");
+                scoreStr = oldReslutStr + scoreStr;
+            }
+            //生成新的Result对象
+            Result result = new Result();
+
+            result.setId(id);
+            result.setName(name);
             //每组得分末尾加#以示区分,如，甲同学给打的分#乙同学给打的分
             scoreStr += "#";
-            person.setScoreStr(scoreStr);
+            result.setScoreStr(scoreStr);
 
             //将成绩写入数据库中
-            dbService.updatePerson(person);
+            dbService.saveOrUpdateResult(result);
 
             System.out.println(name + scoreStr);
         }

@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.quiz.DAO.PersonDAO;
 import web.quiz.DAO.QuestionDAO;
+import web.quiz.DAO.ResultDAO;
 import web.quiz.model.Person;
 import web.quiz.model.Question;
+import web.quiz.model.Result;
 
 import java.util.List;
 
@@ -17,6 +19,8 @@ public class DBServiceImpl implements DBService{
     private PersonDAO personDAO;
     @Autowired
     private QuestionDAO questionDAO;
+    @Autowired
+    private ResultDAO resultDAO;
 
     public List<Person> loadPersons(){
         return personDAO.getAll();
@@ -26,11 +30,16 @@ public class DBServiceImpl implements DBService{
         return personDAO.get(id);
     }
 
-    public void updatePerson(Person person) {
-        personDAO.update(person);
-    }
-
     public List<Question> loadQuestions() {
         return questionDAO.getAll();
+    }
+
+    public Result getResultByID(String id) {
+        return resultDAO.get(id);
+    }
+
+    public void saveOrUpdateResult(Result result) {
+        resultDAO.saveOrUpdate(result);
+        System.out.println("结果保存成功!");
     }
 }

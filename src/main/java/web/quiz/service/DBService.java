@@ -7,5 +7,6 @@ public interface DBService{
     public List<Question> loadQuestions();
     public List<Person> loadPersons();
     public Person getPersonByID(String id);
-    public void updatePerson(Person person);
+    public Result getResultByID(String id);
+    public void saveOrUpdateResult(Result result);
 }
