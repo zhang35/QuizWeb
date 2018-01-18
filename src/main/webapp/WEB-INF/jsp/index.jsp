@@ -10,7 +10,7 @@
     <link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div id="content">
+    <div id="content" class="content">
     <h1 class="headline">民主测评</h1>
     <p><font color="#FF0000">开始测评前请认真阅读以下注意事项！</font></p>
     <p>请根据被测评人的平时表现,客观的进行测评。</p>

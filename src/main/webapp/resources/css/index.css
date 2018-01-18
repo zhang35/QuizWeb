@@ -9,7 +9,7 @@ body{
     word-wrap: break-word;
     margin-top: 2px;
 }
-#content {
+.content {
     width: 1100px;
     margin: 0 auto;
 	padding: 0 50px 20px 50px;
@@ -17,6 +17,9 @@ body{
     border-radius: 10px;
     box-shadow: 0px 0px 10px #9bb5c4 inset;
     box-sizing: border-box;
+}
+.loginContent{
+    width:800px;
 }
 p {
 	display: block;

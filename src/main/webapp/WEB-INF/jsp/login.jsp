@@ -37,22 +37,21 @@
     </script>
 </head>
 <body>
-<div id="content">
-    <div class="login login-screen">
-          <div class="login-form">
-            <div class="control-group">
-              <input type="text" class="login-field" value="" placeholder="Enter your name" id="login-name">
-              <label class="login-field-icon fui-man-16" for="login-name"></label>
-            </div>
-
-            <div class="control-group">
-              <input type="password" class="login-field" value="" placeholder="Password" id="login-pass">
-              <label class="login-field-icon fui-lock-16" for="login-pass"></label>
-            </div>
-
-            <a class="btn btn-primary btn-large btn-block" href="#">登录</a>
-          </div>
-        </div>
+<body>
+    <div>
+    <form method="POST" action="checkPass">
+        <div id="loginDiv" class="content">
+            <h3 class="headline">管理员登录</h3>
+               <div class="control-group">
+                   <span class="questionSpan">密码：</span>
+                   <input type="password" class="login-field" value="" placeholder="Password" id="login-pass">
+                   <button type="submit" id="btnSubmit" class="btn btn-hg btn-primary btn-wide">提交</button>
+               </div>
+       </div>
+    </form>
 </div>
+
+
+</body>
 </body>
 </html>
