@@ -34,7 +34,21 @@ public class QuizController {
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-        return "login";
+       return "login" ;
+    }
+    @RequestMapping(value = "/check", method = RequestMethod.POST)
+    public String check(HttpServletRequest request, HttpServletResponse response) {
+        String pw = request.getParameter("pass");
+        System.out.println(pw);
+        //不能是==，字符串对比用equals
+        if (pw.equals("123")){
+            System.out.println("ok");
+           return "result";
+        }
+        else{
+            System.out.println("fff");
+            return "login";
+        }
     }
     @RequestMapping(value = "/result", method = RequestMethod.GET)
     public String result() {

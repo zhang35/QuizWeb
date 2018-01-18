@@ -39,12 +39,12 @@
 <body>
 <body>
     <div>
-    <form method="POST" action="checkPass">
-        <div id="loginDiv" class="content">
+    <form method="POST" action="check">
+        <div id="loginDiv" class="content loginContent">
             <h3 class="headline">管理员登录</h3>
                <div class="control-group">
                    <span class="questionSpan">密码：</span>
-                   <input type="password" class="login-field" value="" placeholder="Password" id="login-pass">
+                   <input type="password" class="login-field" value="" placeholder="Password" id="login-pass" name="pass">
                    <button type="submit" id="btnSubmit" class="btn btn-hg btn-primary btn-wide">提交</button>
                </div>
        </div>
