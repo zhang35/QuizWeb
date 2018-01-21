@@ -15,7 +15,7 @@
 
         function loadPage(){
             //获取问卷数据quiz,放入data中
-            $.getJSON("loadJSON",function(data){
+            $.getJSON("loadPaper",function(data){
                 var names = data.names;
                 var ids = data.ids;
                 var questions = data.questions;

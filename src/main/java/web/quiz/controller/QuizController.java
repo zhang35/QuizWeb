@@ -105,15 +105,10 @@ public class QuizController {
         return "voteSuccess";
     }
 
-    @RequestMapping(value = "/json", method = RequestMethod.GET)
-    public String json() {
-        return "loadJSON";
-    }
-
     //从后台读试卷题目，写入json，发给前台显示
-    @RequestMapping(value = "/loadJSON", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadPaper", method = RequestMethod.GET)
     @ResponseBody
-    public byte[] loadJSON() throws IOException{
+    public byte[] loadPaper() throws IOException{
         List<Person> persons = dbService.loadPersons();
         List<String> names = new ArrayList<String>();
         List<String> ids = new ArrayList<String>();
@@ -138,4 +133,23 @@ public class QuizController {
         return b;
     }
 
+    //从后台读试卷题目，写入json，发给前台显示
+    @RequestMapping(value = "/loadResult", method = RequestMethod.GET)
+    @ResponseBody
+    public byte[] loadResult() throws IOException{
+        List<Result> results = new ArrayList<Result>();
+
+        Result result = new Result();
+        result.setId("1");
+        result.setName("zhang");
+        result.setScoreStr("123#234#");
+        results.add(result);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString=objectMapper.writeValueAsString(results);
+        System.out.println(jsonString);
+        //解决传到前端后中文乱码问题
+        byte[] b = jsonString.getBytes("UTF-8");
+        return b;
+    }
 }
