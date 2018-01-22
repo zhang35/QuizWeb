@@ -1,5 +1,6 @@
 package web.quiz.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import org.springframework.web.servlet.ModelAndView;
 import web.quiz.service.DBService;
 import web.quiz.model.*;
 @Controller
@@ -133,17 +135,10 @@ public class QuizController {
         return b;
     }
 
-    //从后台读试卷题目，写入json，发给前台显示
+    //将数据返回到JSP页面
     @RequestMapping(value = "/loadResult", method = RequestMethod.GET)
-    @ResponseBody
     public byte[] loadResult() throws IOException{
-        List<Result> results = new ArrayList<Result>();
-
-        Result result = new Result();
-        result.setId("1");
-        result.setName("zhang");
-        result.setScoreStr("123#234#");
-        results.add(result);
+        List<Result> results = dbService.loadResults();
 
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString=objectMapper.writeValueAsString(results);
@@ -151,5 +146,11 @@ public class QuizController {
         //解决传到前端后中文乱码问题
         byte[] b = jsonString.getBytes("UTF-8");
         return b;
+    }
+
+    @RequestMapping(value="/showResult")
+    public ModelAndView showResult(){
+        ModelAndView modelAndView = new ModelAndView("");
+        return ;
     }
 }

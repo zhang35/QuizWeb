@@ -26,6 +26,10 @@ public class DBServiceImpl implements DBService{
         return personDAO.getAll();
     }
 
+    public List<Result> loadResults() {
+        return resultDAO.getAll();
+    }
+
     public Person getPersonByID(String id) {
         return personDAO.get(id);
     }
