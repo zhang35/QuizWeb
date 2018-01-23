@@ -2,6 +2,7 @@ package web.quiz.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,69 +25,87 @@ public class QuizController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String defaultPage() {
-        return "result";
+        return "login";
     }
+
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index() {
         return "index";
     }
+
     @RequestMapping(value = "/vote", method = RequestMethod.GET)
     public String vote() {
         return "vote";
     }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-       return "login" ;
+        return "login";
     }
+
     @RequestMapping(value = "/check", method = RequestMethod.POST)
-    public String check(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView check(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         String pw = request.getParameter("pass");
         System.out.println(pw);
         //不能是==，字符串对比用equals
-        if (pw.equals("123")){
-            System.out.println("ok");
-           return "result";
-        }
-        else{
-            System.out.println("fff");
-            return "login";
+        if (pw.equals("123")) {
+            ModelAndView mav = new ModelAndView("result");
+            System.out.println("yeah");
+            List<Result> results = dbService.loadResults();
+//            request.setAttribute("results", results);
+//            request.setAttribute("message", "HelloJSP");
+
+//            mav.addObject("results", results);
+//            mav.addObject("message", "helloJSP");
+            model.addAttribute("results", results);
+            model.addAttribute("message", "helloJSP");
+            return mav;
+        } else {
+            return new ModelAndView("login");
         }
     }
-    @RequestMapping(value = "/result", method = RequestMethod.GET)
-    public String result() {
-        return "result";
+
+    //在方法的参数列表中添加形参 ModelMap map,spring 会自动创建ModelMap对象。
+    //然后调用map的put(key,value)或者addAttribute(key,value)将数据放入map中，spring会自动将数据存入request。
+    @RequestMapping(value = "/showResult", method = RequestMethod.GET)
+    public ModelAndView result(HttpServletRequest request, ModelMap model) {
+//        List<Result> results = dbService.loadResults();
+//        System.out.println(results);
+//        model.addAttribute("results", results);
+        System.out.println("yeah");
+        model.addAttribute("message", "helloJSP");
+        return new ModelAndView("result");
     }
+
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String submit(HttpServletRequest request, HttpServletResponse response) {
         //获得表单中所有值
-        Enumeration<String> enu=request.getParameterNames();
+        Enumeration<String> enu = request.getParameterNames();
 
         //第一个是发送过来的隐藏的questionNum，确定个数。
-        int questionNum=Integer.parseInt(request.getParameter(enu.nextElement()));
+        int questionNum = Integer.parseInt(request.getParameter(enu.nextElement()));
 
-        while(enu.hasMoreElements()){
+        while (enu.hasMoreElements()) {
             //对于每趟循环，第一个是发送过来的隐藏的name,中文名字
-            String paraName=(String)enu.nextElement();
+            String paraName = (String) enu.nextElement();
             String name = request.getParameter(paraName);
             //对于每趟循环，第二个是发送过来的隐藏的id,编号
-            paraName=(String)enu.nextElement();
+            paraName = (String) enu.nextElement();
             String id = request.getParameter(paraName);
 
             String scoreStr = "";
             //剩下的读取questionNum个答案
-            for (int i=0; i<questionNum; i++){
-                paraName=(String)enu.nextElement();
+            for (int i = 0; i < questionNum; i++) {
+                paraName = (String) enu.nextElement();
                 scoreStr += request.getParameter(paraName);
             }
 
 //            如果已经有以前的成绩，先加上
             Result oldResult = dbService.getResultByID(id);
-            if (oldResult != null){
+            if (oldResult != null) {
                 String oldReslutStr = oldResult.getScoreStr();
                 System.out.println(oldReslutStr);
-                System.out.println("kkkkk");
                 if (oldReslutStr != null)
-                    System.out.println("oooooo");
                 scoreStr = oldReslutStr + scoreStr;
             }
             //生成新的Result对象
@@ -110,11 +129,11 @@ public class QuizController {
     //从后台读试卷题目，写入json，发给前台显示
     @RequestMapping(value = "/loadPaper", method = RequestMethod.GET)
     @ResponseBody
-    public byte[] loadPaper() throws IOException{
+    public byte[] loadPaper() throws IOException {
         List<Person> persons = dbService.loadPersons();
         List<String> names = new ArrayList<String>();
         List<String> ids = new ArrayList<String>();
-        for (Person p : persons){
+        for (Person p : persons) {
             names.add(p.getName());
             ids.add(p.getId());
         }
@@ -127,7 +146,7 @@ public class QuizController {
         quiz.setIds(ids);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString=objectMapper.writeValueAsString(quiz);
+        String jsonString = objectMapper.writeValueAsString(quiz);
         System.out.println(jsonString);
 
         //解决传到前端后中文乱码问题
@@ -137,20 +156,15 @@ public class QuizController {
 
     //将数据返回到JSP页面
     @RequestMapping(value = "/loadResult", method = RequestMethod.GET)
-    public byte[] loadResult() throws IOException{
+    public byte[] loadResult() throws IOException {
         List<Result> results = dbService.loadResults();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString=objectMapper.writeValueAsString(results);
+        String jsonString = objectMapper.writeValueAsString(results);
         System.out.println(jsonString);
         //解决传到前端后中文乱码问题
         byte[] b = jsonString.getBytes("UTF-8");
         return b;
     }
 
-    @RequestMapping(value="/showResult")
-    public ModelAndView showResult(){
-        ModelAndView modelAndView = new ModelAndView("");
-        return ;
-    }
 }
