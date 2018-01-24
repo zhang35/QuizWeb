@@ -20,41 +20,6 @@
 	<script src="resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
 	<link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="resources/css/flat-ui.min.css" rel="stylesheet">
-	<script type="text/javascript">
-        window.onload = function(){
-            // loadPage();
-            // window.location.href = "/index";
-        };
-
-        function loadPage(){
-            //获取问卷数据quiz,放入data中
-            var results;
-            var questions;
-            $.getJSON("loadResult",function(data){
-                results = data;
-                var result = results[0];
-                var testDiv = '<div class="test">' + result.scoreStr + "</div>";
-
-                var tableDiv = '<table class="table table-striped"> <thead> <tr> <th>姓名</th> <th>成绩</th> </tr> </thead>';
-                tableDiv.append('');
-                tableDiv.append('</table>');
-                $("#content").html(tableDiv);
-            });
-
-            $.getJSON("loadPaper",function(data) {
-                questions = data.questions;
-                var names = data.names;
-                var ids = data.ids;
-                var numNames = names.length;
-                var numQuestions = questions.length;
-                var sendQuestionNum = '<input type="hidden" name="questionNum" value="' + numQuestions + '">'; //隐藏字段，发送题目数。name=questionNum,value=numQuestions
-
-
-            });
-        }
-
-	</script>
-
 	<title>测评页</title>
 </head>
 <body>
@@ -77,8 +42,6 @@
 		</tbody>
 	</table>
 </div>
-
-
 
 </body>
 </html>
