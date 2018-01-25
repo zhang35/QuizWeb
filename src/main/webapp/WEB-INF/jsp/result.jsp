@@ -4,6 +4,8 @@
 <%@page isELIgnored="false" %>
 <%--使JSTL <c: forEach>这样的标签生效--%>
 <%@ page import="java.util.List" %>
+<%@ page import="web.quiz.model.Question" %>
+<%@ page import="web.quiz.model.Person" %>
 <%--
   Created by IntelliJ IDEA.
   User: jiaqi
@@ -20,27 +22,29 @@
 	<script src="resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
 	<link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="resources/css/flat-ui.min.css" rel="stylesheet">
-	<title>测评页</title>
+	<title>查看结果</title>
 </head>
 <body>
-<h3 class="headline">结果统计:</h3>
+<h3 class="headline">参评人员:</h3>
 <div id="content">
-	<%
-		List<Result> results = (List<Result>) request.getAttribute("results");
-		String message = (String)request.getAttribute("message");
-	%>
-	<table class="table table-striped"> <thead> <tr> <th>编号</th> <th>姓名</th> <th>评分</th></tr> </thead>
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>编号</th> <th>姓名</th> <th>单位</th>
+		</tr>
+		</thead>
 		<tbody>
-        <c:forEach items="${results}" var="resultt">
+		<c:forEach items="${persons}" var="person">
 			<tr>
-				<td>${result.id}</td>
-				<td>${result.getName()}</td>
-				<td>${result.getScoreStr()}</td>
+				<td>${person.id}</td>
+				<td><a href="${person.id}/detail">${person.name}</a></td>
+				<td>${person.department}</td>
 			</tr>
 		</c:forEach>
 
 		</tbody>
 	</table>
+	<p>点击姓名，查看详细结果</p>
 </div>
 
 </body>

@@ -17,6 +17,7 @@
     </bean>
 
     <!-- 静态资源(js、image等)的访问 -->
+    <mvc:resources mapping="/" location="/resources/" />
     <mvc:default-servlet-handler />
 </beans>
        

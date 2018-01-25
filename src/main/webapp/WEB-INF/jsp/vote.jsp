@@ -21,8 +21,6 @@
                 var questions = data.questions;
                 var numNames = names.length;
                 var numQuestions = questions.length;
-                var sendQuestionNum = '<input type="hidden" name="questionNum" value="' + numQuestions + '">'; //隐藏字段，发送题目数。name=questionNum,value=numQuestions
-                $("form").append(sendQuestionNum);
 
                 var radioCount = 0;
                 //每一个人

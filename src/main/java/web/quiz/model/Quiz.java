@@ -1,4 +1,4 @@
-package web.quiz.controller;
+package web.quiz.model;
 
 import web.quiz.model.*;
 

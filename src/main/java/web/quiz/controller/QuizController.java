@@ -1,12 +1,17 @@
 package web.quiz.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,24 +19,34 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.web.servlet.ModelAndView;
+import sun.applet.AppletListener;
 import web.quiz.service.DBService;
 import web.quiz.model.*;
+
 @Controller
 public class QuizController {
     @Resource
     private DBService dbService;
 
+    private List<Question> questions;
     private int questionNum;
     private int maxOptionNum;
 
-    public QuizController() {
-        this.questionNum = 0;
-        this.maxOptionNum = 0;
-    }
+    private List<Person> persons;
+    private int personNum;
 
+    private Quiz quiz;
+
+//    @Component
+//    public class SpringListener implements ApplicationListener<ContextRefreshedEvent>{
+//        public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+//            System.out.println("fuck");
+//            if(contextRefreshedEvent.getApplicationContext().getParent() == null){
+//                initQuiz();
+//            }
+//        }
+//    }
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String defaultPage() {
         return "login";
@@ -58,21 +73,8 @@ public class QuizController {
         System.out.println(pw);
         //不能是==，字符串对比用equals
         if (pw.equals("123")) {
-            ModelAndView mav = new ModelAndView("result");
-            System.out.println("yeah");
-            List<Result> results = dbService.loadResults();
-//            request.setAttribute("results", results);
-//            request.setAttribute("message", "HelloJSP");
-
-//            mav.addObject("results", results);
-//            mav.addObject("message", "helloJSP");
-            //返回一个map对象，包含姓名，题目，选项，统计结果
-            //姓名、统计结果在Result对象里找，题目选项在Question里找
-            for (Result res : results){
-            }
-            model.addAttribute("results", results);
-            model.addAttribute("message", "helloJSP");
-            return mav;
+            model.addAttribute("persons", persons);
+            return new ModelAndView("result");
         } else {
             return new ModelAndView("login");
         }
@@ -80,23 +82,31 @@ public class QuizController {
 
     //在方法的参数列表中添加形参 ModelMap map,spring 会自动创建ModelMap对象。
     //然后调用map的put(key,value)或者addAttribute(key,value)将数据放入map中，spring会自动将数据存入request。
-    @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public ModelAndView result(HttpServletRequest request, ModelMap model) {
-//        List<Result> results = dbService.loadResults();
-//        System.out.println(results);
-//        model.addAttribute("results", results);
-        System.out.println("yeah");
-        model.addAttribute("message", "helloJSP");
-        return new ModelAndView("result");
+    @RequestMapping(value = "/{id}/detail", method = RequestMethod.GET)
+    public ModelAndView detail(HttpServletRequest request, ModelMap model, @PathVariable String id) {
+        System.out.println("分析答案…");
+        Result result = dbService.getResultByID(id);
+        if (result == null){
+           return new ModelAndView("empty");
+        }
+        int [][] counts = parseScoreStr(result.getScoreStr(), maxOptionNum);
+        String [][] options = new String[questionNum][maxOptionNum];
+        for (int i=0; i<questionNum; i++) {
+            options[i] = questions.get(i).getOptions().split("#");
+        }
+        String name = result.getName();
+        model.addAttribute("name", name);
+        model.addAttribute("questions", questions);
+        model.addAttribute("options", options);
+        model.addAttribute("counts", counts);
+        System.out.println("分析完毕");
+        return new ModelAndView("detail");
     }
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String submit(HttpServletRequest request, HttpServletResponse response) {
         //获得表单中所有值
         Enumeration<String> enu = request.getParameterNames();
-
-        //第一个是发送过来的隐藏的questionNum，确定个数。
-        int questionNum = Integer.parseInt(request.getParameter(enu.nextElement()));
 
         while (enu.hasMoreElements()) {
             //对于每趟循环，第一个是发送过来的隐藏的name,中文名字
@@ -107,7 +117,7 @@ public class QuizController {
             String id = request.getParameter(paraName);
 
             String scoreStr = "";
-            //剩下的读取questionNum个答案
+            //读取questionNum个答案
             for (int i = 0; i < questionNum; i++) {
                 paraName = (String) enu.nextElement();
                 scoreStr += request.getParameter(paraName);
@@ -143,47 +153,11 @@ public class QuizController {
     @RequestMapping(value = "/loadPaper", method = RequestMethod.GET)
     @ResponseBody
     public byte[] loadPaper() throws IOException {
-        List<Person> persons = dbService.loadPersons();
-        List<String> names = new ArrayList<String>();
-        List<String> ids = new ArrayList<String>();
-        for (Person p : persons) {
-            names.add(p.getName());
-            ids.add(p.getId());
-        }
-
-        List<Question> questions = dbService.loadQuestions();
-        //为私有成员questionNum赋值
-        questionNum = questions.size();
-        //确定最大选项数maxOptionNum
-        for (int i = 0; i < questionNum; i++) {
-            int optionNum = questions.get(i).getOptions().split("#").length;
-            if (optionNum>maxOptionNum) {
-                maxOptionNum = optionNum;
-            }
-        }
-
-        Quiz quiz = new Quiz();
-        quiz.setNames(names);
-        quiz.setQuestions(questions);
-        quiz.setIds(ids);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = objectMapper.writeValueAsString(quiz);
+        String jsonString = objectMapper.writeValueAsString(this.quiz);
         System.out.println(jsonString);
 
-        //解决传到前端后中文乱码问题
-        byte[] b = jsonString.getBytes("UTF-8");
-        return b;
-    }
-
-    //将数据返回到JSP页面
-    @RequestMapping(value = "/loadResult", method = RequestMethod.GET)
-    public byte[] loadResult() throws IOException {
-        List<Result> results = dbService.loadResults();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = objectMapper.writeValueAsString(results);
-        System.out.println(jsonString);
         //解决传到前端后中文乱码问题
         byte[] b = jsonString.getBytes("UTF-8");
         return b;
@@ -201,7 +175,21 @@ public class QuizController {
 //    第二题 1    1    1
 //    第三题 0    2    1
 //    第四题 2    1    0
-    public int[][] parseScoreStr(String scoreStr, int maxOptionNum) {
+    private int getMaxOptionNum(List<Question> questions) {
+
+        int  questionNum = questions.size();
+        int maxOptionNum = 0;
+        //确定最大选项数maxOptionNum
+        for (int i = 0; i < questionNum; i++) {
+            int optionNum = questions.get(i).getOptions().split("#").length;
+            if (optionNum>maxOptionNum) {
+                maxOptionNum = optionNum;
+            }
+        }
+        return maxOptionNum;
+    }
+
+    private int[][] parseScoreStr(String scoreStr, int maxOptionNum) {
         String [] strArray = scoreStr.split("#")    ;
         int questionNum = strArray[0].length();
         int [][] count = new int[questionNum][maxOptionNum];
@@ -217,5 +205,31 @@ public class QuizController {
         }
 
         return count;
+    }
+
+    @PostConstruct
+    private void initQuiz(){
+        System.out.println("读取答卷……");
+        this.questions = dbService.loadQuestions();
+        this.questionNum = questions.size();
+        this.maxOptionNum = getMaxOptionNum(questions);
+        System.out.println("读取完毕");
+
+        System.out.println("读取人员……");
+        this.persons = dbService.loadPersons();
+        this.personNum = persons.size();
+        System.out.println("读取完毕");
+
+        List<String> names = new ArrayList<String>();
+        List<String> ids = new ArrayList<String>();
+        for (Person p : persons) {
+            names.add(p.getName());
+            ids.add(p.getId());
+        }
+
+        this.quiz = new Quiz();
+        this.quiz.setNames(names);
+        this.quiz.setQuestions(questions);
+        this.quiz.setIds(ids);
     }
 }

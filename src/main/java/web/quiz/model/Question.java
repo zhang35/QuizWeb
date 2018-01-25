@@ -13,7 +13,6 @@ public class Question {
 	private String title;
 	private String title_en; //存储题目英文名，用于生成表单的id
 	private String options; //存储选项，选项间用'#'隔开
-
 	public int getId() {
 		return id;
 	}
