@@ -38,18 +38,9 @@ public class QuizController {
 
     private Quiz quiz;
 
-//    @Component
-//    public class SpringListener implements ApplicationListener<ContextRefreshedEvent>{
-//        public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-//            System.out.println("fuck");
-//            if(contextRefreshedEvent.getApplicationContext().getParent() == null){
-//                initQuiz();
-//            }
-//        }
-//    }
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String defaultPage() {
-        return "login";
+        return "vote";
     }
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
@@ -58,8 +49,20 @@ public class QuizController {
     }
 
     @RequestMapping(value = "/vote", method = RequestMethod.GET)
-    public String vote() {
-        return "vote";
+    public ModelAndView vote(ModelMap model) {
+        String options[][] = new String[questionNum][maxOptionNum];
+        String questionTitles[] = new String[questionNum];
+        for (int i=0; i<questionNum; i++) {
+            options[i] = questions.get(i).getOptions().split("#");
+            questionTitles[i] = questions.get(i).getTitle();
+        }
+
+        model.addAttribute("names", this.quiz.getNames());
+        model.addAttribute("ids", this.quiz.getIds());
+        model.addAttribute("titles", questionTitles);
+        model.addAttribute("options", options);
+
+        return new ModelAndView("vote");
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

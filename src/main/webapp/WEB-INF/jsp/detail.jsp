@@ -1,8 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="web.quiz.model.Result" %>
-<%@ page import="web.quiz.model.Question" %>
 <%@page isELIgnored="false" %>
-<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: jiaqi
@@ -18,13 +15,13 @@
 </head>
 <body>
 
-<%
-    List<Question> questions = (List<Question>) request.getAttribute("questions");
-	String options[][] = (String[][])request.getAttribute("options");
-    int[][] counts = (int[][]) request.getAttribute("counts");
-//    int test = 100;
-//    pageContext.setAttribute("test", test);
-%>
+<%--<%--%>
+    <%--List<Question> questions = (List<Question>) request.getAttribute("questions");--%>
+	<%--String options[][] = (String[][])request.getAttribute("options");--%>
+    <%--int[][] counts = (int[][]) request.getAttribute("counts");--%>
+<%--//    int test = 100;--%>
+<%--//    pageContext.setAttribute("test", test);--%>
+<%--%>--%>
 <%--<p>${test}</p>--%>
 <h1>${name} 测评结果:</h1>
         <table class="table table-striped">
