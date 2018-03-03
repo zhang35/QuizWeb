@@ -1,11 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="web.quiz.model.Result" %>
 <%--使EL表达式${}生效，小心坑啊--%>
 <%@page isELIgnored="false" %>
 <%--使JSTL <c: forEach>这样的标签生效--%>
-<%@ page import="java.util.List" %>
-<%@ page import="web.quiz.model.Question" %>
-<%@ page import="web.quiz.model.Person" %>
 <%--
   Created by IntelliJ IDEA.
   User: jiaqi

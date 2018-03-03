@@ -12,7 +12,6 @@
         window.onload = function(){
             loadPage();
         };
-
         function loadPage(){
             //获取问卷数据quiz,放入data中
             $.getJSON("loadPaper",function(data){
@@ -21,7 +20,6 @@
                 var questions = data.questions;
                 var numNames = names.length;
                 var numQuestions = questions.length;
-
                 var radioCount = 0;
                 //每一个人
                 for (var i=0; i<numNames; i++){
@@ -29,15 +27,12 @@
                     var testDiv = '<div class="test">' + '<p class="name">' + (i+1) + ".&nbsp" + names[i] + '：</p>';
                     testDiv += '<input type="hidden" name="name' + i + '" value="' + names[i] + '">'; //隐藏字段，发送名字。name=name0,value="张"
                     testDiv += '<input type="hidden" name="id' + i + '" value="' + ids[i] + '">'; //隐藏字段，发送id。name=id0, value=1
-
                     //每一个题，生成题目和选项
                     for (j=0; j<numQuestions; j++){
                         //题目
                         testDiv = testDiv + '<div class="question"><span class="questionSpan">' + questions[j].title + '</span>';
-
                         //选项
                         var options = questions[j].options.split("#");
-
                         //每一个选项，生成每个选项的radio
                         for (k=0; k<options.length; k++){
                             var radioID = "radio" + radioCount; //radio0、radio1……
@@ -55,11 +50,8 @@
                 });
                 $("form").append('<button type="submit" id="btnSubmit" class="btn btn-hg btn-primary btn-wide">提交</button>');
             });
-
         }
-
 	</script>
-
 	<title>测评页</title>
 </head>
 <body>
