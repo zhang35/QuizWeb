@@ -34,22 +34,31 @@ public class QuizController {
     private int maxOptionNum;
 
     private List<Person> persons;
-    private int personNum;
 
     private Quiz quiz;
 
+    private String userIPs;
+    private int currentUserNum;
+    private int totalUserNum;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String defaultPage() {
-        return "vote";
+        return "index";
     }
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
-    public String index() {
+    public String index(HttpServletRequest request) {
         return "index";
     }
 
     @RequestMapping(value = "/vote", method = RequestMethod.GET)
-    public ModelAndView vote(ModelMap model) {
+    public ModelAndView vote(HttpServletRequest request, ModelMap model) {
+        //一个IP只能投一次
+        String ip = request.getRemoteAddr();
+        if (userIPs.contains(ip)){
+            return new ModelAndView("voteFailure");
+        }
+
         String options[][] = new String[questionNum][maxOptionNum];
         String questionTitles[] = new String[questionNum];
         for (int i=0; i<questionNum; i++) {
@@ -70,13 +79,27 @@ public class QuizController {
         return "login";
     }
 
-    @RequestMapping(value = "/check", method = RequestMethod.POST)
+    @RequestMapping(value = "/resetIPs", method = RequestMethod.GET)
+    public ModelAndView resetIPs(ModelMap model) {
+
+        this.currentUserNum = 0;
+        this.userIPs = "";
+
+        model.addAttribute("persons", persons);
+        model.addAttribute("totalUserNum", totalUserNum);
+        model.addAttribute("currentUserNum", currentUserNum);
+        return new ModelAndView("result");
+    }
+
+    @RequestMapping(value = "/result", method = RequestMethod.POST)
     public ModelAndView check(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         String pw = request.getParameter("pass");
         System.out.println(pw);
         //不能是==，字符串对比用equals
         if (pw.equals("123")) {
             model.addAttribute("persons", persons);
+            model.addAttribute("totalUserNum", totalUserNum);
+            model.addAttribute("currentUserNum", currentUserNum);
             return new ModelAndView("result");
         } else {
             return new ModelAndView("login");
@@ -108,6 +131,10 @@ public class QuizController {
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String submit(HttpServletRequest request, HttpServletResponse response) {
+        userIPs = userIPs + "#" + request.getRemoteAddr();
+        currentUserNum++;
+        totalUserNum++;
+
         //获得表单中所有值
         Enumeration<String> enu = request.getParameterNames();
 
@@ -220,19 +247,25 @@ public class QuizController {
 
         System.out.println("读取人员……");
         this.persons = dbService.loadPersons();
-        this.personNum = persons.size();
         System.out.println("读取完毕");
 
+        //包装成Quiz问卷
         List<String> names = new ArrayList<String>();
         List<String> ids = new ArrayList<String>();
         for (Person p : persons) {
             names.add(p.getName());
             ids.add(p.getId());
         }
-
         this.quiz = new Quiz();
         this.quiz.setNames(names);
         this.quiz.setQuestions(questions);
         this.quiz.setIds(ids);
+
+        System.out.println("人数:" + names.size());
+        System.out.println("题目数：" + questionNum);
+        //每次重新启动网站时清空IP
+        this.userIPs = "";
+        this.totalUserNum = 0;
+        this.currentUserNum = 0;
     }
 }

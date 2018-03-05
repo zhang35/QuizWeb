@@ -39,7 +39,7 @@
 <body>
 <body>
     <div>
-    <form method="POST" action="check">
+    <form method="POST" action="result">
         <div id="loginDiv" class="content loginContent">
             <h3 class="headline">管理员登录</h3>
                <div class="control-group">

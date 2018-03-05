@@ -41,6 +41,9 @@
 		</tbody>
 	</table>
 	<p>点击姓名，查看详细结果</p>
+	<p>已投票总人数：${totalUserNum}</p>
+	<p>本轮投票人数：${currentUserNum}</p>
+	<a href="<c:url value="resetIPs"  />" onclick="javascript:alert('开放成功！');" class="link">重新开放投票</a>
 </div>
 
 </body>
