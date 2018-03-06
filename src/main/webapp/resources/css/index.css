@@ -35,7 +35,7 @@ body{
     top: 30%;
     position: relative;
     margin-top: 110px;
-    background-color: rgba(255, 255, 255, 0.82);
+    background-color: rgba(255, 255, 255, 0.4);
     border-radius: 20px;
     box-shadow: 0px 0px 10px #dadbdc inset;
     color: black;
@@ -62,9 +62,10 @@ p {
     text-align: center;
     color: #335a9a !important;
     font-size: 50px;
+    font-family: "Microsoft YaHei";
 }
 .btn-get-started {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Microsoft YaHei";
     font-weight: 500;
     font-size: 24px;
     letter-spacing: 1px;
