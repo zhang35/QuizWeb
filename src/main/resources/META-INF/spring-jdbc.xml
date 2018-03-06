@@ -45,5 +45,4 @@
 
        <!--指定使用哪个事务管理器-->
        <tx:annotation-driven transaction-manager="transactionManager" />
-
 </beans>

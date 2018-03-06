@@ -1,39 +1,89 @@
 /*body{*/
     /*text-align:center;*/
 /*}*/
-.headline {
-	color: #1abc9c;
-    margin-bottom: 5px;
-    padding: 40px 0;
-    text-align: center;
-    word-wrap: break-word;
-    margin-top: 2px;
-}
+
 .content {
     width: 1100px;
-    margin: 0 auto;
-	padding: 0 50px 20px 50px;
+    margin: 70px auto 0;
+    padding: 0 50px 20px 50px;
 	border: 3px solid #fff;
     border-radius: 10px;
     box-shadow: 0px 0px 10px #9bb5c4 inset;
     box-sizing: border-box;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px #dadbdc inset;
 }
-.loginContent{
-    width:900px;
-}
-p {
-	display: block;
-	font-size: 18px;
-    line-height: 1.72222;
-    margin: 0 0 15px;
-    -webkit-margin-before: 1em;
-    -webkit-margin-after: 1em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
+body{
+    margin: 0;
+    padding: 0;
 }
 
+#top-image {
+    background: linear-gradient(
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2)
+    ), url('../images/sky.jpg') no-repeat fixed;
+    position:fixed ;
+    top:0;
+    width:100%;
+    z-index:0;
+    height:100%;
+}
+
+#content {
+    transform: translateY(-50%);
+    top: 30%;
+    position: relative;
+    margin-top: 110px;
+    background-color: rgba(255, 255, 255, 0.82);
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px #dadbdc inset;
+    color: black;
+}
+
+.jumbotron {
+    background-color: transparent !important;
+    /* text-shadow: 0 1px 2px rgba(0,0,0,0.34); */
+}
+
+p {
+	display: block;
+	/* color: black; */
+    font-family: "Microsoft YaHei";
+	font-size: 19px;
+	line-height: 1.72222;
+	margin: 0 0 20px;
+	-webkit-margin-before: 1em;
+	-webkit-margin-after: 1em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+}
+.headline {
+    text-align: center;
+    color: #335a9a !important;
+    font-size: 50px;
+}
+.btn-get-started {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 8px 32px;
+    border-radius: 50px;
+    transition: 0.5s;
+    margin: 10px;
+    color: #fff;
+    background: #18d26e;
+
+}
+.btn-get-started:hover {
+    background: #fff;
+    color: #18d26e;
+}
 .link {
     font-size: 20px;
+    text-align: center;
 }
 .c1:after{content:"*";color:red}
 .c2:after{content:"!";width:20px;height:20px;border-radius:100%;color:#fff;background:red;}

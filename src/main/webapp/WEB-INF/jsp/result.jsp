@@ -41,9 +41,12 @@
 		</tbody>
 	</table>
 	<p>点击姓名，查看详细结果</p>
+    <hr />
 	<p>已投票总人数：${totalUserNum}</p>
 	<p>本轮投票人数：${currentUserNum}</p>
 	<a href="<c:url value="resetIPs"  />" onclick="javascript:alert('开放成功！');" class="link">重新开放投票</a>
+	<hr />
+	<a href="<c:url value="printResult"  />" class="link">保存结果为Word</a>
 </div>
 
 </body>

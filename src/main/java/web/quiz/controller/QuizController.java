@@ -21,6 +21,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 import sun.applet.AppletListener;
+import web.quiz.service.DB2Word;
 import web.quiz.service.DBService;
 import web.quiz.model.*;
 
@@ -79,6 +80,13 @@ public class QuizController {
         return "login";
     }
 
+    @RequestMapping(value = "/printResult", method = RequestMethod.GET)
+    public String printResult() {
+        DB2Word d2w = new DB2Word();
+        d2w.db2Word(persons);
+        return "saveSuccess";
+    }
+
     @RequestMapping(value = "/resetIPs", method = RequestMethod.GET)
     public ModelAndView resetIPs(ModelMap model) {
 
@@ -108,6 +116,8 @@ public class QuizController {
 
     //在方法的参数列表中添加形参 ModelMap map,spring 会自动创建ModelMap对象。
     //然后调用map的put(key,value)或者addAttribute(key,value)将数据放入map中，spring会自动将数据存入request。
+
+    //单个人的成绩
     @RequestMapping(value = "/{id}/detail", method = RequestMethod.GET)
     public ModelAndView detail(HttpServletRequest request, ModelMap model, @PathVariable String id) {
         System.out.println("分析答案…");
@@ -193,18 +203,7 @@ public class QuizController {
         return b;
     }
 
-//    method: parseScoreStr
-//    scoreStr = "0121#2210#0010";
-//          问题1 问题2 问题3  问题4
-//     str1 = 0    1    2     1
-//     str2 = 2    2    1     0
-//     str3 = 0    0    1     0
-//      统计结果放入count数组中：
-//   统计： 选项1 选项2 选项3
-//    第一题 2    0    1
-//    第二题 1    1    1
-//    第三题 0    2    1
-//    第四题 2    1    0
+
     private int getMaxOptionNum(List<Question> questions) {
 
         int  questionNum = questions.size();
@@ -218,7 +217,18 @@ public class QuizController {
         }
         return maxOptionNum;
     }
-
+    //    method: parseScoreStr
+//    scoreStr = "0121#2210#0010";
+//          问题1 问题2 问题3  问题4
+//     str1 = 0    1    2     1
+//     str2 = 2    2    1     0
+//     str3 = 0    0    1     0
+//      统计结果放入count数组中：
+//   统计： 选项1 选项2 选项3
+//    第一题 2    0    1
+//    第二题 1    1    1
+//    第三题 0    2    1
+//    第四题 2    1    0
     private int[][] parseScoreStr(String scoreStr, int maxOptionNum) {
         String [] strArray = scoreStr.split("#")    ;
         int questionNum = strArray[0].length();
