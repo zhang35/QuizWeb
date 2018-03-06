@@ -2,17 +2,6 @@
     /*text-align:center;*/
 /*}*/
 
-.content {
-    width: 1100px;
-    margin: 70px auto 0;
-    padding: 0 50px 20px 50px;
-	border: 3px solid #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px #9bb5c4 inset;
-    box-sizing: border-box;
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px #dadbdc inset;
-}
 body{
     margin: 0;
     padding: 0;
@@ -22,7 +11,7 @@ body{
     background: linear-gradient(
             rgba(0, 0, 0, 0.2),
             rgba(0, 0, 0, 0.2)
-    ), url('../images/sky.jpg') no-repeat fixed;
+    ), url('../images/plane.jpg') no-repeat fixed;
     position:fixed ;
     top:0;
     width:100%;
@@ -86,12 +75,3 @@ p {
     font-size: 20px;
     text-align: center;
 }
-.c1:after{content:"*";color:red}
-.c2:after{content:"!";width:20px;height:20px;border-radius:100%;color:#fff;background:red;}
-.c3{border:1px solid red;}
-/*这里有三个class*/
-/*你在要显示红色* 的时候，用c1*/
-/*要显示右边！时用c2*/
-/*要显示红色边框时用c3*/
-/*addClass(类名)    增加class*/
-/*removeClass(类名)  移出class*/

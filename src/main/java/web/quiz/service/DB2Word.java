@@ -20,7 +20,7 @@ public class DB2Word {
 				for (Person p : persons ) {
                 //数据准备
 					date.put("name", p.getName());
-					date.put("sex", p.getGender());
+					date.put("sex", p.getSex());
 					date.put("birthday", p.getBirthday());
 					date.put("department", p.getDepartment());
 					date.put("rank_time", p.getRank_time());

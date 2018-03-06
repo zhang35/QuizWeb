@@ -20,7 +20,7 @@
     <script src="resources/js/canvas-particle.js" type="text/javascript"></script>
     <link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="resources/css/flat-ui.min.css" rel="stylesheet">
-    <link href="resources/css/votepage.css" rel="stylesheet">
+    <link href="resources/css/vote.css" rel="stylesheet">
     <title>测评页</title>
     <script type="text/javascript">
         $(document).ready(function () {

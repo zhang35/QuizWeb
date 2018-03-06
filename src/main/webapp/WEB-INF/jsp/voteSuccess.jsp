@@ -5,14 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <title>提交成功</title>
-    <link href="resources/css/index.css" rel="stylesheet">
     <link href="resources/css/flat-ui.min.css" rel="stylesheet">
     <link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/voteSuccess.css" rel="stylesheet">
 </head>
 <body>
-    <div id="content">
-    <h1 class="headline">提交成功！</h1>
-    <a href="<c:url value="index" />" class="link">返回测评</a>
+<div class="content center-block">
+    <div style="text-align:center">
+        <span class="headline">提交成功！</span><img src="resources/images/success.ico" alt="no" height=8%/>
     </div>
+    <div class="center-block"><a style="text-align:center" href="index" class="link">返回测评</a></div>
+</div>
 </body>
 </html>

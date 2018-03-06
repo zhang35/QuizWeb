@@ -21,16 +21,6 @@ body{
 .loginContent{
     width:900px;
 }
-p {
-	display: block;
-	font-size: 18px;
-    line-height: 1.72222;
-    margin: 0 0 15px;
-    -webkit-margin-before: 1em;
-    -webkit-margin-after: 1em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-}
 
 .link {
     font-size: 20px;
