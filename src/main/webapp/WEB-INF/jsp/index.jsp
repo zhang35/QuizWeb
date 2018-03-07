@@ -29,7 +29,7 @@
         </div>
     </div>
 </div>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="resources/js/jquery-3.1.1.min.js"></script>
 <script src="resources/js/ios-parallax.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {

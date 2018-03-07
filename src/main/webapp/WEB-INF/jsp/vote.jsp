@@ -73,7 +73,7 @@
                             <span class="questionSpan">${title}</span>
                             <c:forEach items="${options[tStatus.count-1]}" var="option" varStatus="oStatus">
                                 <label class="radio myLable" for="radio${nStatus.count}.${tStatus.count}.${oStatus.count}" >
-                                    <input type="radio" name="option${nStatus.count}.${tStatus.count}" value="${oStatus.count-1}" id="radio${nStatus.count}.${tStatus.count}.${oStatus.count}" data-toggle="radio" class="custom-radio" required />
+                                    <input type="radio" name="option${nStatus.count}.${tStatus.count}" value="${oStatus.count-1}" id="radio${nStatus.count}.${tStatus.count}.${oStatus.count}" data-toggle="radio" class="custom-radio" required checked/>
                                     <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
                                         ${option}
                                 </label>

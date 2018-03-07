@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface PrintService {
     //int [person][question][option] results
-    public void printWord(List<Person> persons, int[][][]results);
+    public void printWord(List<Person> persons, int[][][]results, String ftlTemplatePath, String folderPath);
 }

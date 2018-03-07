@@ -19,6 +19,22 @@
 	<link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="resources/css/flat-ui.min.css" rel="stylesheet">
 	<title>查看结果</title>
+
+	<script type="text/javascript">
+        //testUrl为Controller的方法对应RequestMapping，方法返回对应页面名称
+        //locate为传递过来的#id,如  "#right"，即加载到id为right的位置
+        function resetIPs() {
+            $.ajax({
+                url: "resetIPs",
+                async: true,
+                dataType: 'text',
+				success: function(data){
+                    alert("开放成功！");
+                    $('#currentVoterNum').text('0');
+				}
+            });
+        }
+	</script>
 </head>
 <body>
 <h3 class="headline">参评人员:</h3>
@@ -42,9 +58,11 @@
 	</table>
 	<p>点击姓名，查看详细结果</p>
     <hr />
-	<p>已投票总人数：${totalUserNum}</p>
-	<p>本轮投票人数：${currentUserNum}</p>
-	<a href="<c:url value="resetIPs"  />" onclick="javascript:alert('开放成功！');" class="link">重新开放投票</a>
+	<p>已投票总人数：<label id="totalVoterNum">${totalVoterNum}</label></p>
+	<p>本轮投票人数：<label id="currentVoterNum">${currentVoterNum}</label></p>
+	<%--<a href="<c:url value="resetIPs"  />" onclick="javascript:alert('开放成功！');" class="link">重新开放投票</a>--%>
+	<button onclick="resetIPs();" class="link">重新开放投票</button>
+	<p id="data">此处显示结果</p>
 	<hr />
 	<a href="<c:url value="printResult"  />" class="link">保存结果为Word</a>
 </div>

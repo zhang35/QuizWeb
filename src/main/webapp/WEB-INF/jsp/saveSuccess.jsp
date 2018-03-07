@@ -4,14 +4,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>提交成功</title>
-    <link href="resources/css/index.css" rel="stylesheet">
+    <title>保存成功</title>
     <link href="resources/css/flat-ui.min.css" rel="stylesheet">
     <link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div id="content">
-    <h1 class="headline">保存成功</h1>
-    </div>
+    <h3>结果保存成功!</h3>
 </body>
 </html>

@@ -1,14 +1,8 @@
 package web.quiz.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.PostConstruct;
@@ -16,31 +10,33 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
-import sun.applet.AppletListener;
 import web.quiz.service.DB2Word;
 import web.quiz.service.DBService;
 import web.quiz.model.*;
+import web.quiz.service.PrintService;
 
 @Controller
 public class QuizController {
     @Resource
     private DBService dbService;
 
+    @Resource
+    private PrintService printService;
+
     private List<Question> questions;
     private int questionNum;
     private int maxOptionNum;
 
     private List<Person> persons;
+    private List<Result> results;
 
     private Quiz quiz;
 
-    private String userIPs;
-    private int currentUserNum;
-    private int totalUserNum;
+    private String voterIPs;
+    private int currentVoterNum;
+    private int totalVoterNum;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String defaultPage() {
@@ -48,7 +44,7 @@ public class QuizController {
     }
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
-    public String index(HttpServletRequest request) {
+    public String index() {
         return "index";
     }
 
@@ -56,7 +52,7 @@ public class QuizController {
     public ModelAndView vote(HttpServletRequest request, ModelMap model) {
         //一个IP只能投一次
         String ip = request.getRemoteAddr();
-        if (userIPs.contains(ip)){
+        if (voterIPs.contains(ip)){
             return new ModelAndView("voteFailure");
         }
 
@@ -82,32 +78,29 @@ public class QuizController {
 
     @RequestMapping(value = "/printResult", method = RequestMethod.GET)
     public String printResult() {
-        DB2Word d2w = new DB2Word();
-        d2w.db2Word(persons);
+        int [][][] counts = new int[0][0][0];
+        printService.printWord(this.persons, counts, "/", "/");
         return "saveSuccess";
     }
 
-    @RequestMapping(value = "/resetIPs", method = RequestMethod.GET)
-    public ModelAndView resetIPs(ModelMap model) {
+    @RequestMapping("/resetIPs")
+    @ResponseBody
+    public String resetIPs(){
+        this.currentVoterNum = 0;
+        this.voterIPs = "";
+        System.out.println("resetIP success");
+        return "success";
 
-        this.currentUserNum = 0;
-        this.userIPs = "";
-
-        model.addAttribute("persons", persons);
-        model.addAttribute("totalUserNum", totalUserNum);
-        model.addAttribute("currentUserNum", currentUserNum);
-        return new ModelAndView("result");
     }
 
     @RequestMapping(value = "/result", method = RequestMethod.POST)
     public ModelAndView check(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         String pw = request.getParameter("pass");
-        System.out.println(pw);
         //不能是==，字符串对比用equals
         if (pw.equals("123")) {
             model.addAttribute("persons", persons);
-            model.addAttribute("totalUserNum", totalUserNum);
-            model.addAttribute("currentUserNum", currentUserNum);
+            model.addAttribute("totalVoterNum", totalVoterNum);
+            model.addAttribute("currentVoterNum", currentVoterNum);
             return new ModelAndView("result");
         } else {
             return new ModelAndView("login");
@@ -141,10 +134,11 @@ public class QuizController {
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String submit(HttpServletRequest request, HttpServletResponse response) {
-        userIPs = userIPs + "#" + request.getRemoteAddr();
-        currentUserNum++;
-        totalUserNum++;
+        voterIPs = voterIPs + "#" + request.getRemoteAddr();
+        currentVoterNum++;
+        totalVoterNum++;
 
+        System.out.println(voterIPs);
         //获得表单中所有值
         Enumeration<String> enu = request.getParameterNames();
 
@@ -167,7 +161,6 @@ public class QuizController {
             Result oldResult = dbService.getResultByID(id);
             if (oldResult != null) {
                 String oldReslutStr = oldResult.getScoreStr();
-                System.out.println(oldReslutStr);
                 if (oldReslutStr != null)
                 scoreStr = oldReslutStr + scoreStr;
             }
@@ -188,21 +181,6 @@ public class QuizController {
         //返回result界面,显示结果
         return "voteSuccess";
     }
-
-    //从后台读试卷题目，写入json，发给前台显示
-    @RequestMapping(value = "/loadPaper", method = RequestMethod.GET)
-    @ResponseBody
-    public byte[] loadPaper() throws IOException {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = objectMapper.writeValueAsString(this.quiz);
-        System.out.println(jsonString);
-
-        //解决传到前端后中文乱码问题
-        byte[] b = jsonString.getBytes("UTF-8");
-        return b;
-    }
-
 
     private int getMaxOptionNum(List<Question> questions) {
 
@@ -274,8 +252,8 @@ public class QuizController {
         System.out.println("人数:" + names.size());
         System.out.println("题目数：" + questionNum);
         //每次重新启动网站时清空IP
-        this.userIPs = "";
-        this.totalUserNum = 0;
-        this.currentUserNum = 0;
+        this.voterIPs = "";
+        this.totalVoterNum = 0;
+        this.currentVoterNum = 0;
     }
 }
