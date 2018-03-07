@@ -31,12 +31,12 @@ public class CreateWord {
 
 	public void createDoc(){		
 		Template template = null;
-		//��������ʵ�� 
+		//创建配置实例 
 		@SuppressWarnings("deprecation")
 		Configuration configuration = new Configuration();
-		//���ñ���
+		//设置编码
 	    configuration.setDefaultEncoding("utf-8");
-	    //ftlģ���ļ�ͳһ���� template ������
+	    //ftl模板文件统一放至 template 包下面
 	    configuration.setClassForTemplateLoading(this.getClass(),"/");
 	    
 		try {
@@ -45,9 +45,9 @@ public class CreateWord {
 		    e.printStackTrace();
 		}		 
 		
-        //��������ļ�
+        //定义输出文件
 		File outFile = new File(filePath+fileName);
-		//������Ŀ���ļ��в����ڣ��򴴽�
+		//如果输出目标文件夹不存在，则创建
         if (!outFile.getParentFile().exists()   ){
             outFile.getParentFile().mkdirs();
         }
@@ -59,7 +59,7 @@ public class CreateWord {
 		} catch (FileNotFoundException e) {
 		    e.printStackTrace();
 		}		
-		//���word�ļ�
+		//输出word文件
 		try {
 			template.process(date, out);
 	        out.flush();
@@ -71,7 +71,7 @@ public class CreateWord {
 	    }
 	}
     
-	//get��set����
+	//get和set方法
 	public String getTemplateName() {
 		return templateName;
 	}

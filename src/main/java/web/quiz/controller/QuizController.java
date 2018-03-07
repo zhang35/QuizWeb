@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-import web.quiz.service.DB2Word;
 import web.quiz.service.DBService;
 import web.quiz.model.*;
 import web.quiz.service.PrintService;
@@ -30,7 +29,7 @@ public class QuizController {
     private int maxOptionNum;
 
     private List<Person> persons;
-    private List<Result> results;
+    private int [][][] finalCounts;
 
     private Quiz quiz;
 
@@ -76,11 +75,25 @@ public class QuizController {
         return "login";
     }
 
-    @RequestMapping(value = "/printResult", method = RequestMethod.GET)
-    public String printResult() {
-        int [][][] counts = new int[0][0][0];
-        printService.printWord(this.persons, counts, "/", "/");
-        return "saveSuccess";
+    @RequestMapping(value = "/saveToWord", method = RequestMethod.GET)
+    @ResponseBody
+    public String saveToWord() {
+
+        System.out.println("分析答案…");
+        List<Result> results = dbService.loadResults();
+        if (results == null){
+            System.out.println("load result error!");
+        }
+        for (int i=0; i<results.size(); i++){
+           this.finalCounts[i] = parseScoreStr(results.get(i).getScoreStr(), maxOptionNum);
+        }
+
+        String ftlTemplatePath = "/web/quiz/service/Template.ftl";
+//        String ftlTemplatePath = "";
+        String folderPath = "/Users/jiaqi/workspace/2018测评";
+        printService.printWord(this.persons, this.finalCounts, ftlTemplatePath, folderPath);
+        System.out.println("saveToWord Success");
+        return "saveToWord Success";
     }
 
     @RequestMapping("/resetIPs")
@@ -89,8 +102,16 @@ public class QuizController {
         this.currentVoterNum = 0;
         this.voterIPs = "";
         System.out.println("resetIP success");
-        return "success";
+        return "resetIP success";
 
+    }
+    @RequestMapping("/getVoterNum")
+    @ResponseBody
+    public Map<String, Object> getVoterNum(){
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("totalVoterNum", totalVoterNum);
+        map.put("currentVoterNum", currentVoterNum);
+        return map;
     }
 
     @RequestMapping(value = "/result", method = RequestMethod.POST)
@@ -99,8 +120,6 @@ public class QuizController {
         //不能是==，字符串对比用equals
         if (pw.equals("123")) {
             model.addAttribute("persons", persons);
-            model.addAttribute("totalVoterNum", totalVoterNum);
-            model.addAttribute("currentVoterNum", currentVoterNum);
             return new ModelAndView("result");
         } else {
             return new ModelAndView("login");
@@ -138,7 +157,6 @@ public class QuizController {
         currentVoterNum++;
         totalVoterNum++;
 
-        System.out.println(voterIPs);
         //获得表单中所有值
         Enumeration<String> enu = request.getParameterNames();
 
@@ -227,6 +245,7 @@ public class QuizController {
 
     @PostConstruct
     private void initQuiz(){
+        //从数据库读取信息
         System.out.println("读取答卷……");
         this.questions = dbService.loadQuestions();
         this.questionNum = questions.size();
@@ -251,9 +270,13 @@ public class QuizController {
 
         System.out.println("人数:" + names.size());
         System.out.println("题目数：" + questionNum);
+
         //每次重新启动网站时清空IP
         this.voterIPs = "";
         this.totalVoterNum = 0;
         this.currentVoterNum = 0;
+
+        //初始化测评统计finalCount
+        this.finalCounts = new int[names.size()][questionNum][maxOptionNum];
     }
 }
