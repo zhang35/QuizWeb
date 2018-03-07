@@ -58,8 +58,8 @@
 	</table>
 	<p>点击姓名，查看详细结果</p>
     <hr />
-	<p>已投票总人数：<label id="totalVoterNum">${totalVoterNum}</label></p>
-	<p>本轮投票人数：<label id="currentVoterNum">${currentVoterNum}</label></p>
+	<p>已投票总人数：<span id="totalVoterNum">${totalVoterNum}</span></p>
+	<p>本轮投票人数：<span id="currentVoterNum">${currentVoterNum}</span></p>
 	<%--<a href="<c:url value="resetIPs"  />" onclick="javascript:alert('开放成功！');" class="link">重新开放投票</a>--%>
 	<button onclick="resetIPs();" class="link">重新开放投票</button>
 	<p id="data">此处显示结果</p>
