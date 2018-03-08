@@ -15,13 +15,24 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="resources/css/flat-ui.min.css" rel="stylesheet">
-	<link href="resources/css/result.css" rel="stylesheet">
+	<link href="/resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/resources/css/flat-ui.min.css" rel="stylesheet">
+	<link href="/resources/css/result.css" rel="stylesheet">
 	<title>查看结果</title>
 
-	<script src="resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+	<script src="/resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
+        function selectFolder() //选择目录
+        {
+            var Dir;
+            var objSrc= new ActiveXObject("Shell.Application").BrowseForFolder(0,'Select the directory', 0, '');
+            if (objSrc!=null)
+            {
+                Dir = objSrc.Items().Item().Path;
+                alert(Dir);
+            }
+        }
+
         function resetIPs() {
             $.ajax({
                 url: "resetIPs",
@@ -89,12 +100,10 @@
     <hr />
 	<p>已投票总人数：<span id="totalVoterNum"></span></p>
 	<p>本轮投票人数：<span id="currentVoterNum"></span></p>
-	<a href="javascript:;" onclick="resetIPs();" class="btn-primary btn-lg">重新开放投票</a>
+	<a href="javascript:;" onclick="resetIPs();" class="btn-primary btn-lg">开放投票</a>
 	<hr />
     <p>导出结果为Word文档：</p>
-		<input type="text" value="" placeholder="文件保存地址" />
-	<a href="javascript:;" onclick="" class="btn-primary btn-lg">选择</a>
-    <a href="javascript:;" onclick="saveToWord();" class="btn-primary btn-lg">导出</a>
+	<a href="/fileDownLoad" class="btn-primary btn-lg">下载文件</a>
 </div>
 
 </body>

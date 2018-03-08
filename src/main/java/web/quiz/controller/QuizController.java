@@ -1,5 +1,8 @@
 package web.quiz.controller;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +12,9 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.*;
 
 import web.quiz.service.DBService;
@@ -75,25 +80,52 @@ public class QuizController {
         return "login";
     }
 
-    @RequestMapping(value = "/saveToWord", method = RequestMethod.GET)
-    @ResponseBody
-    public String saveToWord() {
-
+    @RequestMapping("/fileDownLoad")
+    public ResponseEntity<byte[]> fileDownLoad(HttpServletRequest request) throws Exception{
+        //读取答案，统计结果
         System.out.println("分析答案…");
         List<Result> results = dbService.loadResults();
         if (results == null){
             System.out.println("load result error!");
         }
         for (int i=0; i<results.size(); i++){
-           this.finalCounts[i] = parseScoreStr(results.get(i).getScoreStr(), maxOptionNum);
+            this.finalCounts[i] = parseScoreStr(results.get(i).getScoreStr(), maxOptionNum);
         }
 
+        //保存结果为Word
         String ftlTemplatePath = "/web/quiz/service/Template.ftl";
-//        String ftlTemplatePath = "";
-        String folderPath = "/Users/jiaqi/workspace/2018测评";
+        String folderPath = "/Users/jiaqi/workspace/QuizResults";
         printService.printWord(this.persons, this.finalCounts, ftlTemplatePath, folderPath);
         System.out.println("saveToWord Success");
-        return "saveToWord Success";
+
+        //压缩Word文件夹
+        String zipFilePath = "/Users/jiaqi/workspace/QuizResults.zip";
+        printService.createZip(folderPath, zipFilePath);
+        System.out.println("createZip Success");
+
+        //提供下载zip文件
+        File file = new File(zipFilePath);
+        byte[] body = null;
+        InputStream is = new FileInputStream(file);
+        body = new byte[is.available()];
+        is.read(body);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment;filename=" + file.getName());
+        //ContentType用于定义用户的浏览器或相关设备如何显示将要加载的数据，octet-stream代表任意的二进制数据）
+        //不加这一句用Safari下载时出现.html后缀
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        HttpStatus statusCode = HttpStatus.OK;
+        ResponseEntity<byte[]> entity = new ResponseEntity<byte[]>(body, headers, statusCode);
+        return entity;
+
+        //public ResponseEntity（T  body，
+        //                       MultiValueMap < String，String > headers，
+        //                       HttpStatus  statusCode）
+        //HttpEntity使用给定的正文，标题和状态代码创建一个新的。
+        //参数：
+        //body - 实体机构
+        //headers - 实体头
+        //statusCode - 状态码
     }
 
     @RequestMapping("/resetIPs")
@@ -154,14 +186,15 @@ public class QuizController {
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String submit(HttpServletRequest request, HttpServletResponse response) {
         voterIPs = voterIPs + "#" + request.getRemoteAddr();
-        currentVoterNum++;
-        totalVoterNum++;
+        this.currentVoterNum++;
+        this.totalVoterNum++;
 
         //获得表单中所有值
         Enumeration<String> enu = request.getParameterNames();
 
         while (enu.hasMoreElements()) {
-            //对于每趟循环，第一个是发送过来的隐藏的name,中文名字
+            //对于每趟循环，第一个是发送过来的隐藏的name,中文名字。
+            //每趟循环读取一个Person的成绩
             String paraName = (String) enu.nextElement();
             String name = request.getParameter(paraName);
             //对于每趟循环，第二个是发送过来的隐藏的id,编号
@@ -178,9 +211,9 @@ public class QuizController {
 //            如果已经有以前的成绩，先加上
             Result oldResult = dbService.getResultByID(id);
             if (oldResult != null) {
-                String oldReslutStr = oldResult.getScoreStr();
-                if (oldReslutStr != null)
-                scoreStr = oldReslutStr + scoreStr;
+                String oldResultStr = oldResult.getScoreStr();
+                if (oldResultStr != null)
+                scoreStr = oldResultStr + scoreStr;
             }
             //生成新的Result对象
             Result result = new Result();
@@ -205,9 +238,9 @@ public class QuizController {
         int  questionNum = questions.size();
         int maxOptionNum = 0;
         //确定最大选项数maxOptionNum
-        for (int i = 0; i < questionNum; i++) {
-            int optionNum = questions.get(i).getOptions().split("#").length;
-            if (optionNum>maxOptionNum) {
+        for (Question question : questions) {
+            int optionNum = question.getOptions().split("#").length;
+            if (optionNum > maxOptionNum) {
                 maxOptionNum = optionNum;
             }
         }
@@ -273,8 +306,19 @@ public class QuizController {
 
         //每次重新启动网站时清空IP
         this.voterIPs = "";
-        this.totalVoterNum = 0;
         this.currentVoterNum = 0;
+
+        //获取总投票数
+        this.totalVoterNum = 0;
+        List<Result> results = dbService.loadResults();
+        if (results.size() > 0) {
+            //获取对第一个person的答案
+            String tempScoreStr = results.get(0).getScoreStr();
+            if (tempScoreStr != null){
+                //每个投票者形成问题数量+1个字符(0000#)
+                this.totalVoterNum = tempScoreStr.length() / (this.questionNum+1);
+            }
+        }
 
         //初始化测评统计finalCount
         this.finalCounts = new int[names.size()][questionNum][maxOptionNum];

@@ -12,10 +12,10 @@
 <head>
     <meta charset="UTF-8">
     <title>管理员登录</title>
-    <script src="resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
-    <link href="resources/css/login.css" rel="stylesheet">
-    <link href="resources/css/flat-ui.min.css" rel="stylesheet">
-    <link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <link href="/resources/css/login.css" rel="stylesheet">
+    <link href="/resources/css/flat-ui.min.css" rel="stylesheet">
+    <link href="/resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <%--properties文件放到resources文件夹--%>
     <%ResourceBundle resourceBundle = ResourceBundle.getBundle("./META-INF/properties/myres"); %>
     <script type="text/javascript">

@@ -8,9 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>测评页</title>
-    <link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="resources/css/flat-ui.min.css" rel="stylesheet">
-    <link href="resources/css/index.css" rel="stylesheet">
+    <link href="/resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/flat-ui.min.css" rel="stylesheet">
+    <link href="/resources/css/index.css" rel="stylesheet">
 </head>
 <body>
 <header id="header">

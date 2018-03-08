@@ -18,7 +18,6 @@
 }
 
 #nav a {
-    background: #ededed;
     color: #666;
     background-color: white;
     display: block;
@@ -37,15 +36,32 @@
     color: #ededed;
 }
 
-#container {
+.container {
     margin: 0 auto;
     width: 800px;
     background-color: white;
-    border: 1px solid #ddc7b5;
-    border-radius: 4px;
-    -webkit-box-shadow: 4px 4px 16px #cccccc;
+    -webkit-box-shadow: 13px 13px 9px 0px #cccccc;
 }
+.intro {
+    color: rgba(0, 0, 0, 0.35);
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    padding-top: 5px;
+    text-align: right;
 
+}
+.notice {
+    line-height: 24px;
+    background: #F7F7F7;
+    border: 1px dashed #CCC;
+    padding: 15px;
+    margin: 15px 0;
+    color: #666;
+    clear: both;
+    font-size: 12px;
+}
 .section {
     border-bottom: 1px solid #ccc;
     min-height: 10vh;
@@ -59,24 +75,17 @@
 .myLable {
     display: inline-block;
     width: 100px;
+    /*font-size: 18px;*/
 }
 .headline {
-	color: #3effd9;
-    margin-bttom: 5px;
+	/*color: #3effd9;*/
+    color: #428bca;
     text-align: center;
     word-wrap: break-word;
-    margin-top: 30px;
+    margin-top: 50px;
     padding-bottom: 20px;
 }
-.test {
-    width: 1200px;
-    margin: 0 auto;
-	padding: 0 50px 20px 50px;
-	border: 3px solid #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px #9bb5c4 inset;
-    box-sizing: border-box;
-}
+
 p {
 	display: block;
 	font-size: 18px;
@@ -101,8 +110,11 @@ p {
     color: #428bca;
     font-size: 20px;
 }
-
+.question {
+    margin: 0 0 20px 20px;
+    border-bottom: #e3ebeb 1px solid;
+}
 body {
-    background-color: #eee;
-    background-image: url(/resources/images/plane.jpg);
+    /*background: #eee url(/resources/images/plane.jpg);*/
+    background: #eee;
 }

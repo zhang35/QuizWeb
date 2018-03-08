@@ -50,43 +50,51 @@
     </script>
 </head>
 <body>
-<h3 class="headline">请对以下人员进行测评</h3>
+<div class="container">
+    <h3 class="headline">指挥军官民主测评</h3>
+    <div class="notice">
+        <p>亲爱的战友：</p>
+       <p>您好！感谢您对基地工作的支持，希望您在百忙之中能认真如实填写。</p>
+        <p>（注：所有参评人的总评优秀率不超过80%，否则将视为无效）</p>
+        <p class="intro">空军飞行模拟训练基地政治处</p>
+    </div>
+</div>
 <ul id="nav">
     <c:forEach items="${names}" var="name" varStatus="nStatus">
         <li><a href="#section${nStatus.count}">${name}</a></li>
     </c:forEach>
 </ul>
+<%--粒子特效作用范围mydiv--%>
 <div id="mydiv" style="height:1000px;">
-<div id="container">
+    <div class="container">
+        <div class="form-group">
+            <form method="POST" action="submit">
+                <c:forEach items="${names}" var="name" varStatus="nStatus">
+                    <div class="section" id="section${nStatus.count}">
+                        <p class="name">
+                                ${nStatus.count}. ${name}：
+                        </p>
+                        <input type="hidden" name="name${nStatus.count}" value="${name}" />
+                        <input type="hidden" name="id${nStatus.count}" value="${ids[nStatus.count-1]}" />
+                        <c:forEach items="${titles}" var="title" varStatus="tStatus">
+                            <div class="question">
+                                <span class="questionSpan">${title}</span>
+                                <c:forEach items="${options[tStatus.count-1]}" var="option" varStatus="oStatus">
+                                    <label class="radio myLable" for="radio${nStatus.count}.${tStatus.count}.${oStatus.count}" >
+                                        <input type="radio" name="option${nStatus.count}.${tStatus.count}" value="${oStatus.count-1}" id="radio${nStatus.count}.${tStatus.count}.${oStatus.count}" data-toggle="radio" class="custom-radio" required checked/>
+                                        <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                                            ${option}
+                                    </label>
+                                </c:forEach>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </c:forEach>
+                <button type="submit" id="btnSubmit" class="btn btn-hg btn-primary btn-wide">提交</button>
+            </form>
+        </div>
 
-    <div class="form-group">
-        <form method="POST" action="submit">
-            <c:forEach items="${names}" var="name" varStatus="nStatus">
-                <div class="section" id="section${nStatus.count}">
-                    <p class="name">
-                            ${nStatus.count}. ${name}：
-                    </p>
-                    <input type="hidden" name="name${nStatus.count}" value="${name}" />
-                    <input type="hidden" name="id${nStatus.count}" value="${ids[nStatus.count-1]}" />
-                    <c:forEach items="${titles}" var="title" varStatus="tStatus">
-                        <div class="question">
-                            <span class="questionSpan">${title}</span>
-                            <c:forEach items="${options[tStatus.count-1]}" var="option" varStatus="oStatus">
-                                <label class="radio myLable" for="radio${nStatus.count}.${tStatus.count}.${oStatus.count}" >
-                                    <input type="radio" name="option${nStatus.count}.${tStatus.count}" value="${oStatus.count-1}" id="radio${nStatus.count}.${tStatus.count}.${oStatus.count}" data-toggle="radio" class="custom-radio" required checked/>
-                                    <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                                        ${option}
-                                </label>
-                            </c:forEach>
-                        </div>
-                    </c:forEach>
-                </div>
-            </c:forEach>
-            <button type="submit" id="btnSubmit" class="btn btn-hg btn-primary btn-wide">提交</button>
-        </form>
     </div>
-
-</div>
 </div>
 </body>
 </html>
