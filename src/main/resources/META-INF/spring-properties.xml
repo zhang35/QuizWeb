@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--自动加载properties文件，对于maven的所有项目, 配置文件一般放在resources目录下, 当编译之后会自动复制到classes目录下-->
+    <context:property-placeholder location="classpath:/META-INF/properties/*.properties" ignore-unresolvable="true"/>
+</beans>

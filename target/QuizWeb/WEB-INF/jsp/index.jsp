@@ -24,7 +24,7 @@
                 <p>请根据被测评人的平时表现,客观进行测评。</p>
                 <p>测评等级共分为：<b>优秀</b>、<b>称职</b>、和<b>不称职</b>三个等次。单项总优秀率高于90%的，总评才能定为优秀；有一个单项为不称职的，总评即为不称职；所有参评人的总评优秀率不超过80%。</p>
                 <p>请逐项测评，不要遗漏测评项。填写不完整的测评卷将被视为无效。</p>
-                    <p style="text-align: center"><a href="<c:url value="vote" />" class="btn-get-started">参加测评</a></p>
+                    <p style="text-align: center"><a href="vote" />" class="btn-get-started">参加测评</a></p>
             </div>
         </div>
     </div>

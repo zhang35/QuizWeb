@@ -21,7 +21,7 @@
     <mvc:default-servlet-handler />
         <!--<mvc:resources mapping="/" location="/resources/" />-->
 
-
+    <import resource="classpath:/META-INF/spring-properties.xml" />
 </beans>
        
        

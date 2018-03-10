@@ -1,4 +1,6 @@
 package web.quiz.controller;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -28,6 +31,14 @@ public class QuizController {
 
     @Resource
     private PrintService printService;
+
+    @Value("${pass}")
+    private String pass;
+    //保存结果为Word
+    @Value("${ftlTemplatePath}")
+    private String ftlTemplatePath;
+    @Value("${wordFolderPath}")
+    private String wordFolderPath;
 
     private List<Question> questions;
     private int questionNum;
@@ -75,11 +86,6 @@ public class QuizController {
         return new ModelAndView("vote");
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
-        return "login";
-    }
-
     @RequestMapping("/fileDownLoad")
     public ResponseEntity<byte[]> fileDownLoad(HttpServletRequest request) throws Exception{
         //读取答案，统计结果
@@ -93,21 +99,18 @@ public class QuizController {
         }
 
         //保存结果为Word
-        String ftlTemplatePath = "/web/quiz/service/Template.ftl";
-        String folderPath = "/Users/jiaqi/workspace/QuizResults";
-        printService.printWord(this.persons, this.finalCounts, ftlTemplatePath, folderPath);
+        printService.printWord(this.persons, this.finalCounts, this.ftlTemplatePath, this.wordFolderPath);
         System.out.println("saveToWord Success");
 
         //压缩Word文件夹
-        String zipFilePath = "/Users/jiaqi/workspace/QuizResults.zip";
-        printService.createZip(folderPath, zipFilePath);
+        String zipFilePath = this.wordFolderPath + ".zip";
+        printService.createZip(wordFolderPath, zipFilePath);
         System.out.println("createZip Success");
 
         //提供下载zip文件
         File file = new File(zipFilePath);
-        byte[] body = null;
         InputStream is = new FileInputStream(file);
-        body = new byte[is.available()];
+        byte[] body = new byte[is.available()];
         is.read(body);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment;filename=" + file.getName());
@@ -115,8 +118,7 @@ public class QuizController {
         //不加这一句用Safari下载时出现.html后缀
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         HttpStatus statusCode = HttpStatus.OK;
-        ResponseEntity<byte[]> entity = new ResponseEntity<byte[]>(body, headers, statusCode);
-        return entity;
+        return new ResponseEntity<byte[]>(body, headers, statusCode);
 
         //public ResponseEntity（T  body，
         //                       MultiValueMap < String，String > headers，
@@ -126,6 +128,26 @@ public class QuizController {
         //body - 实体机构
         //headers - 实体头
         //statusCode - 状态码
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView login(ModelMap model) {
+        model.addAttribute("loginInfo", "");
+        return new ModelAndView("login");
+    }
+
+    @RequestMapping(value = "/checkPass", method = RequestMethod.POST)
+    public ModelAndView check(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        String pw = request.getParameter("pass");
+        //不能是==，字符串对比用equals
+        if (pw.equals(this.pass)) {
+            System.out.println("match");
+            model.addAttribute("persons", persons);
+            return new ModelAndView("result");
+        } else {
+            model.addAttribute("loginInfo", "密码错误！");
+            return new ModelAndView("login");
+        }
     }
 
     @RequestMapping("/resetIPs")
@@ -146,21 +168,8 @@ public class QuizController {
         return map;
     }
 
-    @RequestMapping(value = "/result", method = RequestMethod.POST)
-    public ModelAndView check(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-        String pw = request.getParameter("pass");
-        //不能是==，字符串对比用equals
-        if (pw.equals("123")) {
-            model.addAttribute("persons", persons);
-            return new ModelAndView("result");
-        } else {
-            return new ModelAndView("login");
-        }
-    }
-
     //在方法的参数列表中添加形参 ModelMap map,spring 会自动创建ModelMap对象。
     //然后调用map的put(key,value)或者addAttribute(key,value)将数据放入map中，spring会自动将数据存入request。
-
     //单个人的成绩
     @RequestMapping(value = "/{id}/detail", method = RequestMethod.GET)
     public ModelAndView detail(HttpServletRequest request, ModelMap model, @PathVariable String id) {
@@ -185,6 +194,12 @@ public class QuizController {
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String submit(HttpServletRequest request, HttpServletResponse response) {
+        //一个IP只能投一次
+        String ip = request.getRemoteAddr();
+        if (voterIPs.contains(ip)){
+            return "voteFailure";
+        }
+
         voterIPs = voterIPs + "#" + request.getRemoteAddr();
         this.currentVoterNum++;
         this.totalVoterNum++;
@@ -201,28 +216,29 @@ public class QuizController {
             paraName = (String) enu.nextElement();
             String id = request.getParameter(paraName);
 
-            String scoreStr = "";
-            //读取questionNum个答案
-            for (int i = 0; i < questionNum; i++) {
-                paraName = (String) enu.nextElement();
-                scoreStr += request.getParameter(paraName);
-            }
-
-//            如果已经有以前的成绩，先加上
+            //StringBuffer为字符串变量，拼接字符串时效率较高
+            StringBuffer scoreStr = new StringBuffer("");
+            //如果已经有以前的成绩，先加上
             Result oldResult = dbService.getResultByID(id);
             if (oldResult != null) {
                 String oldResultStr = oldResult.getScoreStr();
-                if (oldResultStr != null)
-                scoreStr = oldResultStr + scoreStr;
+                if (oldResultStr != null){
+                    scoreStr.append(oldResultStr);
+                }
             }
+            //读取questionNum个答案
+            for (int i = 0; i < questionNum; i++) {
+                paraName = (String) enu.nextElement();
+                scoreStr.append(request.getParameter(paraName));
+            }
+
             //生成新的Result对象
             Result result = new Result();
-
             result.setId(id);
             result.setName(name);
             //每组得分末尾加#以示区分,如，甲同学给打的分#乙同学给打的分
-            scoreStr += "#";
-            result.setScoreStr(scoreStr);
+            scoreStr.append('#');
+            result.setScoreStr(scoreStr.toString());
 
             //将成绩写入数据库中
             dbService.saveOrUpdateResult(result);

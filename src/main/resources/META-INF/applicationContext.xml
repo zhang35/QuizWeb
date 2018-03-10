@@ -8,5 +8,6 @@
     <context:component-scan base-package="web.quiz.service"/>
 	<!--<context:component-scan base-package="web.quiz.model"/>-->
 	<context:component-scan base-package="web.quiz.DAO"/>
+	<import resource="classpath:/META-INF/spring-properties.xml" />
 
 </beans>

@@ -1,5 +1,5 @@
-<%@ page import="java.util.ResourceBundle" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page isELIgnored="false" %>
 <%--
   Created by IntelliJ IDEA.
   User: jiaqi
@@ -16,42 +16,21 @@
     <link href="/resources/css/login.css" rel="stylesheet">
     <link href="/resources/css/flat-ui.min.css" rel="stylesheet">
     <link href="/resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <%--properties文件放到resources文件夹--%>
-    <%ResourceBundle resourceBundle = ResourceBundle.getBundle("./META-INF/properties/myres"); %>
-    <script type="text/javascript">
-    var pw = <%=resourceBundle.getString("pass")%>;
-    $(document).ready(function () {
-        $("#info").hide();
-        $("#btnSubmit").click(function(){
-            if ($("#password").val()==pw){
-                alert("ok");
-                $("#password").removeClass("c3");
-                $("#info").hide();
-            }
-            else{
-                $("#password").addClass("c3");
-                $("#info").show();
-            }
-        });
-    });
-    </script>
 </head>
 <body>
-<body>
-    <div>
-    <form method="POST" action="result">
-        <div id="loginDiv" class="content loginContent">
+<div>
+    <form action="/checkPass" method="POST">
+        <div id="loginDiv" class="loginContent">
             <h3 class="headline">管理员登录</h3>
-               <div class="control-group">
-                   <span class="questionSpan">密码：</span>
-                   <input type="password" class="login-field" value="" placeholder="Password" id="login-pass" name="pass">
-                   <button type="submit" id="btnSubmit" class="btn btn-hg btn-primary btn-wide">提交</button>
-               </div>
-       </div>
+            <div class="control-group">
+                <span class="questionSpan">密码：</span>
+                <input type="password" class="login-field" value="" placeholder="Password" id="login-pass" name="pass">
+                <%--<button onclick="checkPass();" id="btnSubmit" class="btn btn-hg btn-primary btn-wide">提交</button>--%>
+                <button id="btnSubmit" onclick="checkPass();" class="btn btn-hg btn-primary btn-wide">提交</button>
+                <span class="info">${loginInfo}</span>
+            </div>
+        </div>
     </form>
 </div>
-
-
-</body>
 </body>
 </html>

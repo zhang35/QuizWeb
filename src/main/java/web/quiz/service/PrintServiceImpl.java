@@ -10,13 +10,13 @@ import java.util.Map;
 
 @Service
 public class PrintServiceImpl implements PrintService{
-    private static final String[] answers ={"A", "B", "C", "D"};
 
     public void createZip(String folderPath, String zipFilePath) {
         CreateZip.toZip(folderPath, zipFilePath, true);
     }
 
     public void printWord(List<Person> persons, int[][][] results, String ftlTemplatePath, String folderPath) {
+        final String[] answers ={"A", "B", "C", "D"};
         Map<String, Object> date = new HashMap<String, Object>();
         String fileName = null;
 

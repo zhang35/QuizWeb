@@ -22,17 +22,6 @@
 
 	<script src="/resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
-        function selectFolder() //选择目录
-        {
-            var Dir;
-            var objSrc= new ActiveXObject("Shell.Application").BrowseForFolder(0,'Select the directory', 0, '');
-            if (objSrc!=null)
-            {
-                Dir = objSrc.Items().Item().Path;
-                alert(Dir);
-            }
-        }
-
         function resetIPs() {
             $.ajax({
                 url: "resetIPs",

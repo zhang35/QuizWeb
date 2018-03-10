@@ -51,12 +51,12 @@
 </head>
 <body>
 <div class="container">
-    <h3 class="headline">指挥军官民主测评</h3>
+    <h3 class="headline">民主测评</h3>
     <div class="notice">
-        <p>亲爱的战友：</p>
-       <p>您好！感谢您对基地工作的支持，希望您在百忙之中能认真如实填写。</p>
+        <p>亲爱的XX：</p>
+       <p>您好！感谢您对单位工作的支持，希望您在百忙之中能认真如实填写。</p>
         <p>（注：所有参评人的总评优秀率不超过80%，否则将视为无效）</p>
-        <p class="intro">空军飞行模拟训练基地政治处</p>
+        <p class="intro">XX处XX办</p>
     </div>
 </div>
 <ul id="nav">

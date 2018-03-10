@@ -10,7 +10,6 @@
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
     ">
 
-       <context:property-placeholder location="classpath:/META-INF/properties/hibernate.properties" />
 
        <!-- 使用C3P0数据源，MySQL数据库 -->
        <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
