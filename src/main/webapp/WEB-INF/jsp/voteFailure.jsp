@@ -3,6 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <%
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://"
+                + request.getServerName() + ":" + request.getServerPort()
+                + path + "/";
+    %>
+    <base href="<%=basePath%>" />
+
     <meta charset="UTF-8">
     <title>进入测评失败</title>
     <script src="resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>

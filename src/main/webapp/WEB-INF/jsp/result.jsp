@@ -14,13 +14,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<%
+		String path = request.getContextPath();
+		String basePath = request.getScheme() + "://"
+				+ request.getServerName() + ":" + request.getServerPort()
+				+ path + "/";
+	%>
+	<base href="<%=basePath%>" />
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/resources/css/flat-ui.min.css" rel="stylesheet">
-	<link href="/resources/css/result.css" rel="stylesheet">
+	<link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="resources/css/flat-ui.min.css" rel="stylesheet">
+	<link href="resources/css/result.css" rel="stylesheet">
 	<title>查看结果</title>
 
-	<script src="/resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+	<script src="resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
         function resetIPs() {
             $.ajax({
@@ -92,7 +100,7 @@
 	<a href="javascript:;" onclick="resetIPs();" class="btn-primary btn-lg">开放投票</a>
 	<hr />
     <p>导出结果为Word文档：</p>
-	<a href="/fileDownLoad" class="btn-primary btn-lg">下载文件</a>
+	<a href="fileDownLoad" class="btn-primary btn-lg">下载文件</a>
 </div>
 
 </body>

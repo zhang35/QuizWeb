@@ -10,10 +10,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <%
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://"
+                + request.getServerName() + ":" + request.getServerPort()
+                + path + "/";
+    %>
+    <base href="<%=basePath%>" />
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/resources/css/flat-ui.min.css" rel="stylesheet">
-	<link href="/resources/css/detail.css" rel="stylesheet">
+	<link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="resources/css/flat-ui.min.css" rel="stylesheet">
+	<link href="resources/css/detail.css" rel="stylesheet">
     <title>详细结果</title>
 </head>
 <body>

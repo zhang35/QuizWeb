@@ -29,7 +29,7 @@ public class CreateWord {
 		createDoc();
 	}
 
-	public void createDoc(){		
+	public void createDoc(){
 		Template template = null;
 		//创建配置实例 
 		@SuppressWarnings("deprecation")
@@ -38,7 +38,7 @@ public class CreateWord {
 	    configuration.setDefaultEncoding("utf-8");
 	    //ftl模板文件统一放至 template 包下面
 	    configuration.setClassForTemplateLoading(this.getClass(),"/");
-	    
+
 		try {
 			template = configuration.getTemplate(templateName);
 		} catch (IOException e) {

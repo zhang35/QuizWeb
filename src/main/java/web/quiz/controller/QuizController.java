@@ -34,7 +34,6 @@ public class QuizController {
 
     @Value("${pass}")
     private String pass;
-    //保存结果为Word
     @Value("${ftlTemplatePath}")
     private String ftlTemplatePath;
     @Value("${wordFolderPath}")
@@ -58,7 +57,7 @@ public class QuizController {
         return "index";
     }
 
-    @RequestMapping(value = "index", method = RequestMethod.GET)
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
         return "index";
     }
@@ -99,11 +98,16 @@ public class QuizController {
         }
 
         //保存结果为Word
+
+        //得到file:/Users/jiaqi/workspace/QuizWeb/target/QuizWeb/WEB-INF/classes/
+        String pathWebroot = this.getClass().getResource("/").toString();
+        //去掉前面的file:
+        String realFtlTempLatePath = pathWebroot.substring(5) + this.ftlTemplatePath;
         printService.printWord(this.persons, this.finalCounts, this.ftlTemplatePath, this.wordFolderPath);
         System.out.println("saveToWord Success");
 
         //压缩Word文件夹
-        String zipFilePath = this.wordFolderPath + ".zip";
+        String zipFilePath = this.wordFolderPath + "/results.zip";
         printService.createZip(wordFolderPath, zipFilePath);
         System.out.println("createZip Success");
 

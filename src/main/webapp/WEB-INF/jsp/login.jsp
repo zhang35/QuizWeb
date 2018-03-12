@@ -10,16 +10,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <%
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://"
+                + request.getServerName() + ":" + request.getServerPort()
+                + path + "/";
+    %>
+    <base href="<%=basePath%>" />
+
     <meta charset="UTF-8">
     <title>管理员登录</title>
-    <script src="/resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
-    <link href="/resources/css/login.css" rel="stylesheet">
-    <link href="/resources/css/flat-ui.min.css" rel="stylesheet">
-    <link href="/resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <link href="resources/css/login.css" rel="stylesheet">
+    <link href="resources/css/flat-ui.min.css" rel="stylesheet">
+    <link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div>
-    <form action="/checkPass" method="POST">
+    <form action="checkPass" method="POST">
         <div id="loginDiv" class="loginContent">
             <h3 class="headline">管理员登录</h3>
             <div class="control-group">
