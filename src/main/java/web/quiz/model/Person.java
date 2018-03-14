@@ -11,7 +11,7 @@ public class Person {
 	private String name;            //姓名
 	private String department;      //部憋
 	private String duty;            //职别
-	private String gender;             //性别
+	private String sex;             //性别
 	private Date birthday;          //出生日期
 	private Date mil_rank_time;     //军衔时间
 	private Date rank_time;         //职级时间
@@ -81,6 +81,6 @@ public class Person {
 		return deg_of_edu;
 	}
 	public void setDeg_of_edu(String deg_of_edu) { this.deg_of_edu = deg_of_edu; }
-	public String getGender() { return gender; }
-	public void setGender(String gender) { this.gender = gender; }
+	public String getSex() { return sex; }
+	public void setSex(String sex) { this.sex = sex; }
 }

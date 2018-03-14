@@ -13,7 +13,6 @@ public class QuestionDAOImplTest {
         Question q = new Question();
         q.setTitle("行不行?");
         q.setOptions("1#2#3");
-        q.setTitle_en("xing");
 
         questionDAO.save(q);
     }

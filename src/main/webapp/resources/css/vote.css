@@ -1,0 +1,120 @@
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#nav {
+    left: 20px;
+    list-style: none;
+    margin: 0;
+    position: fixed;
+    top: 200px;
+}
+
+#nav li {
+    margin-bottom: 2px;
+    border-bottom: 2px solid #ccc;
+}
+
+#nav a {
+    color: #666;
+    background-color: white;
+    display: block;
+    font-size: 18px;
+    padding: 10px 40px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+#nav a:hover {
+    background: #dedede;
+}
+
+#nav .current a {
+    background: #666;
+    color: #ededed;
+}
+
+.container {
+    margin: 0 auto;
+    width: 800px;
+    background-color: white;
+    -webkit-box-shadow: 13px 13px 9px 0px #cccccc;
+}
+.intro {
+    color: rgba(0, 0, 0, 0.35);
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    padding-top: 5px;
+    text-align: right;
+
+}
+.notice {
+    line-height: 24px;
+    background: #F7F7F7;
+    border: 1px dashed #CCC;
+    padding: 15px;
+    margin: 15px 0;
+    color: #666;
+    clear: both;
+    font-size: 12px;
+}
+.section {
+    border-bottom: 1px solid #ccc;
+    min-height: 10vh;
+    padding: 30px 20px;
+}
+
+.section p:last-child {
+    margin-bottom: 0;
+}
+
+.myLable {
+    display: inline-block;
+    width: 100px;
+    /*font-size: 18px;*/
+}
+.headline {
+	/*color: #3effd9;*/
+    color: #428bca;
+    text-align: center;
+    word-wrap: break-word;
+    margin-top: 50px;
+    padding-bottom: 20px;
+}
+
+p {
+	display: block;
+	font-size: 18px;
+    line-height: 1.72222;
+    margin: 0 0 15px;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+.questionSpan{
+    width: 130px;
+    display: inline-block;
+}
+
+#btnSubmit {
+    margin: 50px auto;
+    display: block;
+}
+
+.name {
+    color: #428bca;
+    font-size: 20px;
+}
+.question {
+    margin: 0 0 20px 20px;
+    border-bottom: #e3ebeb 1px solid;
+}
+body {
+    /*background: #eee url(/resources/images/plane.jpg);*/
+    background: #eee;
+}

@@ -1,235 +1,279 @@
 package web.quiz.controller;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.*;
 
-import sun.applet.AppletListener;
 import web.quiz.service.DBService;
 import web.quiz.model.*;
+import web.quiz.service.ResultService;
 
 @Controller
 public class QuizController {
     @Resource
     private DBService dbService;
 
-    private List<Question> questions;
-    private int questionNum;
+    @Resource
+    private ResultService resultService;
+
+    @Value("${pass}")
+    private String pass;
+    @Value("${ftlTemplatePath}")
+    private String ftlTemplatePath;
+    @Value("${wordFolderPath}")
+    private String wordFolderPath;
+    @Value("${maxOptionNum}")
     private int maxOptionNum;
 
+    private List<Question> questions;
     private List<Person> persons;
-    private int personNum;
 
-    private Quiz quiz;
-
-//    @Component
-//    public class SpringListener implements ApplicationListener<ContextRefreshedEvent>{
-//        public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-//            System.out.println("fuck");
-//            if(contextRefreshedEvent.getApplicationContext().getParent() == null){
-//                initQuiz();
-//            }
-//        }
-//    }
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String defaultPage() {
-        return "login";
+        return "index";
     }
 
-    @RequestMapping(value = "index", method = RequestMethod.GET)
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
         return "index";
     }
 
     @RequestMapping(value = "/vote", method = RequestMethod.GET)
-    public String vote() {
-        return "vote";
+    public ModelAndView vote(HttpServletRequest request, ModelMap model) {
+        //一个IP只能投一次
+        String ip = request.getRemoteAddr();
+        if (dbService.containsIP(ip)){
+            return new ModelAndView("voteFailure");
+        }
+
+
+        List<String> names = new ArrayList<String>();
+        List<String> ids = new ArrayList<String>();
+        for (Person p : this.persons) {
+            names.add(p.getName());
+            ids.add(p.getId());
+        }
+
+        int questionNum = this.questions.size();
+        String options[][] = new String[questionNum][this.maxOptionNum];
+        String questionTitles[] = new String[questionNum];
+        for (int i=0; i<questionNum; i++) {
+            options[i] = this.questions.get(i).getOptions().split("#");
+            questionTitles[i] = this.questions.get(i).getTitle();
+        }
+
+        model.addAttribute("names", names);
+        model.addAttribute("ids", ids);
+        model.addAttribute("titles", questionTitles);
+        model.addAttribute("options", options);
+
+        return new ModelAndView("vote");
+    }
+
+    @RequestMapping(value = "/fileDownload", method = RequestMethod.POST)
+    public ResponseEntity<byte[]> fileDownload(HttpServletRequest request) throws Exception{
+
+        //读取答案，统计结果
+        System.out.println("分析结果…");
+        List<Result> results = dbService.loadResults();
+        if (results == null || results.isEmpty()){
+            System.out.println("结果为空！");
+            return null;
+        }
+
+        //是否过滤选票
+        String checkValidate = request.getParameter("validate");
+        //CheckBox的值，如果关闭的话为null，开启的话为on。
+        boolean validate = false;
+        if (checkValidate==null){
+            System.out.println("不开启过滤");
+        }
+        else {
+            validate = true;
+            System.out.println("开启过滤");
+        }
+
+        //保存结果为Word
+        resultService.printWord(this.persons, results, this.maxOptionNum, this.ftlTemplatePath, this.wordFolderPath, validate);
+        System.out.println("saveToWord Success");
+
+        //压缩Word文件夹
+        String zipFilePath;
+        if (validate){
+            zipFilePath = this.wordFolderPath + "/results(filtrated).zip";
+        }
+        else{
+            zipFilePath = this.wordFolderPath + "/results.zip";
+        }
+        resultService.createZip(wordFolderPath, zipFilePath);
+        System.out.println("createZip Success");
+
+        //提供下载zip文件
+        File file;
+        file = new File(zipFilePath);
+        InputStream is = new FileInputStream(file);
+        byte[] body = new byte[is.available()];
+        int bytes = is.read(body);
+        System.out.println("读取字节数：" + bytes);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment;filename=" + file.getName());
+        //ContentType用于定义用户的浏览器或相关设备如何显示将要加载的数据，octet-stream代表任意的二进制数据）
+        //不加这一句用Safari下载时出现.html后缀
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        HttpStatus statusCode = HttpStatus.OK;
+        return new ResponseEntity<byte[]>(body, headers, statusCode);
+
+        //public ResponseEntity（T  body，
+        //                       MultiValueMap < String，String > headers，
+        //                       HttpStatus  statusCode）
+        //HttpEntity使用给定的正文，标题和状态代码创建一个新的。
+        //参数：
+        //body - 实体机构
+        //headers - 实体头
+        //statusCode - 状态码
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
-        return "login";
+    public ModelAndView login(ModelMap model) {
+        model.addAttribute("loginInfo", "");
+        return new ModelAndView("login");
     }
 
-    @RequestMapping(value = "/check", method = RequestMethod.POST)
-    public ModelAndView check(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+    @RequestMapping(value = "/checkPass", method = RequestMethod.POST)
+    public ModelAndView check(HttpServletRequest request, ModelMap model) {
         String pw = request.getParameter("pass");
-        System.out.println(pw);
         //不能是==，字符串对比用equals
-        if (pw.equals("123")) {
+        if (pw.equals(this.pass)) {
+            System.out.println("match");
             model.addAttribute("persons", persons);
             return new ModelAndView("result");
         } else {
+            model.addAttribute("loginInfo", "密码错误！");
             return new ModelAndView("login");
         }
     }
 
+    @RequestMapping(value = "/resetIPs", method = RequestMethod.POST)
+    @ResponseBody
+    public String resetIPs(){
+        dbService.resetIP();
+        System.out.println("resetIP success");
+        return "resetIP success";
+    }
+
+    @RequestMapping(value = "/getVoterNum", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getVoterNum(){
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Result> results = dbService.loadResults();
+        map.put("totalVoterNum", results.size());
+        map.put("currentVoterNum", dbService.numOfNewIPs());
+        return map;
+    }
+
     //在方法的参数列表中添加形参 ModelMap map,spring 会自动创建ModelMap对象。
     //然后调用map的put(key,value)或者addAttribute(key,value)将数据放入map中，spring会自动将数据存入request。
-    @RequestMapping(value = "/{id}/detail", method = RequestMethod.GET)
-    public ModelAndView detail(HttpServletRequest request, ModelMap model, @PathVariable String id) {
+    //单个人的成绩
+    @RequestMapping(value = "detail", method = RequestMethod.POST)
+    public ModelAndView detail(HttpServletRequest request, ModelMap model) {
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        //是否过滤选票
+        String checkValidate = request.getParameter("validate");
+        //CheckBox的值，如果关闭的话为null，开启的话为on。
+        boolean validate = false;
+        if (checkValidate==null || checkValidate.equals("false")){
+            System.out.println("不开启过滤");
+        }
+        else {
+            validate = true;
+            System.out.println("开启过滤");
+        }
+
         System.out.println("分析答案…");
-        Result result = dbService.getResultByID(id);
-        if (result == null){
-           return new ModelAndView("empty");
+        List<Result> results = dbService.loadResults();
+        int [][][] counts = resultService.doStatistics(results, this.maxOptionNum, validate);
+        if (counts == null){
+            return new ModelAndView("empty");
         }
-        int [][] counts = parseScoreStr(result.getScoreStr(), maxOptionNum);
-        String [][] options = new String[questionNum][maxOptionNum];
+        int questionNum = this.questions.size();
+        int [][] count = counts[Integer.parseInt(id)-1];
+        String [][] options = new String[questionNum][this.maxOptionNum];
         for (int i=0; i<questionNum; i++) {
-            options[i] = questions.get(i).getOptions().split("#");
+            options[i] = this.questions.get(i).getOptions().split("#");
         }
-        String name = result.getName();
         model.addAttribute("name", name);
-        model.addAttribute("questions", questions);
+        model.addAttribute("questions", this.questions);
         model.addAttribute("options", options);
-        model.addAttribute("counts", counts);
+        model.addAttribute("counts", count);
         System.out.println("分析完毕");
         return new ModelAndView("detail");
     }
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public String submit(HttpServletRequest request, HttpServletResponse response) {
+    public String submit(HttpServletRequest request) {
+        //一个IP只能投一次
+        String ip = request.getRemoteAddr();
+        if (dbService.containsIP(ip)){
+            return "voteFailure";
+        }
+
+        //StringBuffer为字符串变量，拼接字符串时效率较高
+        StringBuilder stringBuffer = new StringBuilder("");
         //获得表单中所有值
         Enumeration<String> enu = request.getParameterNames();
-
         while (enu.hasMoreElements()) {
-            //对于每趟循环，第一个是发送过来的隐藏的name,中文名字
-            String paraName = (String) enu.nextElement();
-            String name = request.getParameter(paraName);
-            //对于每趟循环，第二个是发送过来的隐藏的id,编号
-            paraName = (String) enu.nextElement();
-            String id = request.getParameter(paraName);
-
-            String scoreStr = "";
+            //每趟循环读取一个Person的成绩
             //读取questionNum个答案
-            for (int i = 0; i < questionNum; i++) {
-                paraName = (String) enu.nextElement();
-                scoreStr += request.getParameter(paraName);
+            for (int i = 0; i < this.questions.size(); i++) {
+                String paraName = enu.nextElement();
+                stringBuffer.append(request.getParameter(paraName));
             }
-
-//            如果已经有以前的成绩，先加上
-            Result oldResult = dbService.getResultByID(id);
-            if (oldResult != null) {
-                String oldReslutStr = oldResult.getScoreStr();
-                System.out.println(oldReslutStr);
-                if (oldReslutStr != null)
-                scoreStr = oldReslutStr + scoreStr;
-            }
-            //生成新的Result对象
-            Result result = new Result();
-
-            result.setId(id);
-            result.setName(name);
-            //每组得分末尾加#以示区分,如，甲同学给打的分#乙同学给打的分
-            scoreStr += "#";
-            result.setScoreStr(scoreStr);
-
-            //将成绩写入数据库中
-            dbService.saveOrUpdateResult(result);
-
-            System.out.println(name + scoreStr);
+            //每组得分末尾加#以示区分,如，person1得分#person2得分
+            stringBuffer.append('#');
         }
+
+        String scoreStr = stringBuffer.toString();
+        //生成新的Result对象
+        Result result = new Result();
+        //记录IP
+        result.setIp(ip);
+        result.setScoreStr(scoreStr);
+        //将成绩写入数据库中
+        dbService.saveOrUpdateResult(result);
+
         //返回result界面,显示结果
         return "voteSuccess";
     }
 
-    //从后台读试卷题目，写入json，发给前台显示
-    @RequestMapping(value = "/loadPaper", method = RequestMethod.GET)
-    @ResponseBody
-    public byte[] loadPaper() throws IOException {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = objectMapper.writeValueAsString(this.quiz);
-        System.out.println(jsonString);
-
-        //解决传到前端后中文乱码问题
-        byte[] b = jsonString.getBytes("UTF-8");
-        return b;
-    }
-
-//    method: parseScoreStr
-//    scoreStr = "0121#2210#0010";
-//          问题1 问题2 问题3  问题4
-//     str1 = 0    1    2     1
-//     str2 = 2    2    1     0
-//     str3 = 0    0    1     0
-//      统计结果放入count数组中：
-//   统计： 选项1 选项2 选项3
-//    第一题 2    0    1
-//    第二题 1    1    1
-//    第三题 0    2    1
-//    第四题 2    1    0
-    private int getMaxOptionNum(List<Question> questions) {
-
-        int  questionNum = questions.size();
-        int maxOptionNum = 0;
-        //确定最大选项数maxOptionNum
-        for (int i = 0; i < questionNum; i++) {
-            int optionNum = questions.get(i).getOptions().split("#").length;
-            if (optionNum>maxOptionNum) {
-                maxOptionNum = optionNum;
-            }
-        }
-        return maxOptionNum;
-    }
-
-    private int[][] parseScoreStr(String scoreStr, int maxOptionNum) {
-        String [] strArray = scoreStr.split("#")    ;
-        int questionNum = strArray[0].length();
-        int [][] count = new int[questionNum][maxOptionNum];
-        for (int i=0; i<questionNum; i++) {
-            for (int j = 0; j < maxOptionNum; j++) {
-                count[i][j] = 0;
-            }
-        }
-        for (int i=0; i<questionNum; i++){
-            for (int j=0; j<strArray.length; j++){
-                count[i][Character.getNumericValue(strArray[j].charAt(i))]++;
-            }
-        }
-
-        return count;
-    }
-
     @PostConstruct
     private void initQuiz(){
+        //从数据库读取信息
         System.out.println("读取答卷……");
         this.questions = dbService.loadQuestions();
-        this.questionNum = questions.size();
-        this.maxOptionNum = getMaxOptionNum(questions);
         System.out.println("读取完毕");
 
         System.out.println("读取人员……");
         this.persons = dbService.loadPersons();
-        this.personNum = persons.size();
         System.out.println("读取完毕");
 
-        List<String> names = new ArrayList<String>();
-        List<String> ids = new ArrayList<String>();
-        for (Person p : persons) {
-            names.add(p.getName());
-            ids.add(p.getId());
-        }
+        System.out.println("人数:" + persons.size());
+        System.out.println("题目数：" + questions.size());
 
-        this.quiz = new Quiz();
-        this.quiz.setNames(names);
-        this.quiz.setQuestions(questions);
-        this.quiz.setIds(ids);
+        //每次重新启动网站时清空IP
+        dbService.resetIP();
     }
 }

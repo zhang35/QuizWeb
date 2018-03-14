@@ -44,6 +44,32 @@ public class DBServiceImpl implements DBService{
 
     public void saveOrUpdateResult(Result result) {
         resultDAO.saveOrUpdate(result);
-        System.out.println("结果保存成功!");
+    }
+    public int numOfNewIPs() {
+        int count = 0;
+        List<Result> results = resultDAO.getAll();
+        for (Result result : results){
+            if (!result.getIp().endsWith("*")){
+                count++;
+            }
+        }
+        return count;
+    }
+    public boolean containsIP(String ip) {
+        List<Result> results = resultDAO.getByIP(ip);
+        if (results!=null && results.size() > 0){
+            return true;
+        }
+
+        return false;
+    }
+
+    public void resetIP() {
+        List<Result> results = resultDAO.getAll();
+        for (Result result : results){
+            //ip后加*，以脱离containsIP的查询。*的个数代表重置IP的次数。
+            result.setIp(result.getIp() + '*');
+            resultDAO.saveOrUpdate(result);
+        }
     }
 }

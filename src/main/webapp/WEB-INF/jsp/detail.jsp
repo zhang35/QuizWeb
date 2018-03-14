@@ -1,8 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="web.quiz.model.Result" %>
-<%@ page import="web.quiz.model.Question" %>
 <%@page isELIgnored="false" %>
-<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: jiaqi
@@ -13,20 +10,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-	<link href="/resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <%
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://"
+                + request.getServerName() + ":" + request.getServerPort()
+                + path + "/";
+    %>
+    <base href="<%=basePath%>" />
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="resources/css/flat-ui.min.css" rel="stylesheet">
+	<link href="resources/css/detail.css" rel="stylesheet">
     <title>详细结果</title>
 </head>
 <body>
-
-<%
-    List<Question> questions = (List<Question>) request.getAttribute("questions");
-	String options[][] = (String[][])request.getAttribute("options");
-    int[][] counts = (int[][]) request.getAttribute("counts");
-//    int test = 100;
-//    pageContext.setAttribute("test", test);
-%>
-<%--<p>${test}</p>--%>
-<h1>${name} 测评结果:</h1>
+<div id="content">
+<h3>${name} 测评结果:</h3>
+<hr />
         <table class="table table-striped">
 		<thead>
 		<tr>
@@ -49,5 +50,7 @@
 
 		</tbody>
 	</table>
+	<a href="javascript:;" onClick="javascript:history.back(-1);" class="link">返回</a>
+</div>
 </body>
 </html>

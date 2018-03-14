@@ -9,38 +9,16 @@ body{
     word-wrap: break-word;
     margin-top: 2px;
 }
-.content {
-    width: 1100px;
+.loginContent{
+    width:900px;
     margin: 0 auto;
-	padding: 0 50px 20px 50px;
-	border: 3px solid #fff;
+    padding: 0 50px 20px 50px;
+    border: 3px solid #fff;
     border-radius: 10px;
     box-shadow: 0px 0px 10px #9bb5c4 inset;
     box-sizing: border-box;
 }
-.loginContent{
-    width:900px;
-}
-p {
-	display: block;
-	font-size: 18px;
-    line-height: 1.72222;
-    margin: 0 0 15px;
-    -webkit-margin-before: 1em;
-    -webkit-margin-after: 1em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-}
 
-.link {
-    font-size: 20px;
+.info {
+    color: red;
 }
-.c1:after{content:"*";color:red}
-.c2:after{content:"!";width:20px;height:20px;border-radius:100%;color:#fff;background:red;}
-.c3{border:1px solid red;}
-/*这里有三个class*/
-/*你在要显示红色* 的时候，用c1*/
-/*要显示右边！时用c2*/
-/*要显示红色边框时用c3*/
-/*addClass(类名)    增加class*/
-/*removeClass(类名)  移出class*/

@@ -5,7 +5,9 @@ import web.quiz.model.Result;
 import java.util.List;
 
 public interface ResultDAO {
-    public void saveOrUpdate(Result result);
-    public Result get(String id);
-    public List<Result> getAll();
+    void saveOrUpdate(Result result);
+    Result get(String id);
+    List<Result> getByIP(String ip);
+    List<Result> getAll();
+
 }

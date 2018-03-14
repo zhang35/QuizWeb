@@ -1,21 +1,24 @@
 package web.quiz.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Result {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-    private String name;
+    private String ip;
     private String scoreStr;
 
-    public String getName() {
-        return name;
+    public String getIp() {
+        return ip;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public String getId() {
