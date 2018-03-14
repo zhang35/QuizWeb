@@ -1,24 +1,25 @@
-package web.quiz.service;
+package web.quiz.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class AgeCalculate {
+	
 	/*
 	 * 功能：根据出生日期计算年龄
 	 * 参数：字符串类型出生日期 yyyy-MM-dd
 	 * 返回值：整形
 	 */
-	public int getAgeByBirth(String birthday){
+	public static int getAgeByBirth(String birthday){
 		int age = -1;
 		if(birthday == null || birthday == ""){
-			System.out.println("错误：出生日期为空！");
+			//System.out.println("错误：出生日期为空！");
 			return -2;
 		}
 			
 		//截取生日字符串中的年、月、日
-		String strs[] = birthday.trim().split("-");
+		String[] strs = birthday.trim().split("-");
 		int year_birth = Integer.parseInt(strs[0]);
 		int month_birth = Integer.parseInt(strs[1]);
 		int day_birth = Integer.parseInt(strs[2]);
@@ -42,25 +43,23 @@ public class AgeCalculate {
 						 (month_now == month_birth && day_now < day_birth))
 						  age--;					
 			}					
-		}
+		}		
 		
-		if(age < 0){			
-			System.out.println("错误：出生日期不合法，晚于当前日期！");		
-		}
+		//if(age < 0) System.out.println("错误：出生日期不合法，晚于当前日期！");	  
 		
 		return age;
 	}
 	
 	//重载方法getAgeByBirth  参数类型 Date
-	public int getAgeByBirth(Date birthday){
+	public static int getAgeByBirth(String name, Date birthday){
 		int age = -1;	
 		if(birthday == null){
-			System.out.println("错误：出生日期为空！");
+			//System.out.println("错误：出生日期为空！");
 			return -2;
 		}
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		age = getAgeByBirth(formatter.format(birthday));
+		age = getAgeByBirth( formatter.format(birthday));
 		
 		return age;		
 	}	

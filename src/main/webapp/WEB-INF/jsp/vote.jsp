@@ -21,7 +21,6 @@
                 + path + "/";
     %>
     <base href="<%=basePath%>" />
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src="resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script src="resources/js/jquery.nav.js" type="text/javascript"></script>
@@ -82,8 +81,6 @@
                         <p class="name">
                                 ${nStatus.count}. ${name}：
                         </p>
-                        <input type="hidden" name="name${nStatus.count}" value="${name}" />
-                        <input type="hidden" name="id${nStatus.count}" value="${ids[nStatus.count-1]}" />
                         <c:forEach items="${titles}" var="title" varStatus="tStatus">
                             <div class="question">
                                 <span class="questionSpan">${title}</span>

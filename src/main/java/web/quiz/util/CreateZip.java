@@ -1,4 +1,4 @@
-package web.quiz.service;
+package web.quiz.util;
 
 import java.io.File;
 import java.io.FileInputStream;

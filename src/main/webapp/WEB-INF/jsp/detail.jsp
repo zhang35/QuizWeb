@@ -25,15 +25,6 @@
     <title>详细结果</title>
 </head>
 <body>
-
-<%--<%--%>
-    <%--List<Question> questions = (List<Question>) request.getAttribute("questions");--%>
-	<%--String options[][] = (String[][])request.getAttribute("options");--%>
-    <%--int[][] counts = (int[][]) request.getAttribute("counts");--%>
-<%--//    int test = 100;--%>
-<%--//    pageContext.setAttribute("test", test);--%>
-<%--%>--%>
-<%--<p>${test}</p>--%>
 <div id="content">
 <h3>${name} 测评结果:</h3>
 <hr />

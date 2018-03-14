@@ -21,7 +21,6 @@
 				+ path + "/";
 	%>
 	<base href="<%=basePath%>" />
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="resources/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="resources/css/flat-ui.min.css" rel="stylesheet">
@@ -29,39 +28,57 @@
 	<title>查看结果</title>
 
 	<script src="resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+	<script src="resources/js/flat-ui.min.js" type="text/javascript"></script>
+	<script src="resources/js/application.js" type="text/javascript"></script>
 	<script type="text/javascript">
-        function resetIPs() {
-            $.ajax({
-                url: "resetIPs",
-                async: false,
-                dataType: 'text',
-				success: function(data){
-                    alert("开放成功！");
-                    $('#currentVoterNum').text('0');
-				},
-				error: function(){
-                   alert("发送请求失败");
-				}
-            });
-        }
+        function StandardPost (url,args)
+        {
+            var form = $("<form method='post'></form>");
+            form.attr({"action":url});
+            for (arg in args)
+            {
+                var input = $("<input type='hidden'>");
+                input.attr({"name":arg}); //将name属性设置为arg
+                input.val(args[arg]); //将input的内容设置为对应的值
+                form.append(input);
+            }
 
-        function saveToWord() {
-            $.ajax({
-                url: "saveToWord",
-                async: false,
-                dataType: 'text',
-                success: function(data){
-                    alert("文件保存成功");
-                },
-                error: function(){
-                    alert("发送请求失败");
-                }
-            });
+            var validate = $("#custom-switch-02").prop("checked");
+            var input = $("<input type='hidden'>");
+            input.attr({"name": "validate"});
+            input.val(validate);
+            form.append(input);
+
+            //HTML标准规定如果form表单没有被添加到document里，那么form表单提交将会被终止
+            $(document.body).append(form);
+            form.submit();
         }
+        function resetIPs() {
+            if ($('#currentVoterNum').text()=='0'){
+                alert("开放成功！");
+			}
+			else {
+                $.ajax({
+                    type: "POST",
+                    url: "resetIPs",
+                    async: false,
+                    dataType: 'text',
+                    success: function(data){
+                        alert("开放成功！");
+                        $('#currentVoterNum').text('0');
+                    },
+                    error: function(){
+                        alert("发送请求失败");
+                    }
+                });
+			}
+        };
+
         //每隔2000ms运行一次函数
         setInterval("getVoterNum()",2000);
         function getVoterNum() {
             $.ajax({
+                type: "POST",
                 url: "getVoterNum",
                 async: false,
                 dataType: 'json',
@@ -86,11 +103,10 @@
 		<c:forEach items="${persons}" var="person">
 			<tr>
 				<td>${person.id}</td>
-				<td><a href="${person.id}/detail">${person.name}</a></td>
+				<td><a href="javascript:;" onclick="StandardPost('detail', {'id': '${person.id}', 'name':'${person.name}'})">${person.name}</a></td>
 				<td>${person.department}</td>
 			</tr>
 		</c:forEach>
-
 		</tbody>
 	</table>
 	<p>点击姓名，查看详细结果</p>
@@ -100,7 +116,13 @@
 	<a href="javascript:;" onclick="resetIPs();" class="btn-primary btn-lg">开放投票</a>
 	<hr />
     <p>导出结果为Word文档：</p>
-	<a href="fileDownLoad" class="btn-primary btn-lg">下载文件</a>
+    <%--<a href="javascript:;" onclick="fileDownload();" class="btn-primary btn-lg">下载文件</a>--%>
+	<%--<a href="fileDownload" class="btn-primary btn-lg">下载文件</a>--%>
+   <form action="fileDownload" method="POST">
+	   <button type="submit" class="btn-primary btn-lg">下载文件</button>
+	   <span id="switch"><input type="checkbox" name="validate" data-toggle="switch" id="custom-switch-02" />&nbsp;过滤废票</span>
+   </form>
+
 </div>
 
 </body>

@@ -1,4 +1,4 @@
-package web.quiz.service;
+package web.quiz.util;
 
 import java.io.BufferedWriter;
 import java.io.File;

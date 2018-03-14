@@ -10,7 +10,6 @@
                 + path + "/";
     %>
     <base href="<%=basePath%>" />
-
     <meta charset="UTF-8">
     <title>进入测评失败</title>
     <script src="resources/js/jquery-3.1.1.min.js" type="text/javascript"></script>

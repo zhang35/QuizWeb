@@ -10,7 +10,6 @@
                 + path + "/";
     %>
     <base href="<%=basePath%>" />
-
     <meta charset="UTF-8">
     <title>提交成功</title>
     <link href="resources/css/flat-ui.min.css" rel="stylesheet">
