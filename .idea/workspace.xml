@@ -7,38 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6469c183-d219-4e91-a4da-4993c20f4dd4" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/Dump20180312.sql" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/service/ResultServiceImpl.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/util/FindInvalidVote.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/properties/questions.properties" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/application.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/flat-ui.min.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/TestRunWith.java" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/QuizWeb_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/QuizWeb_war.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/50bfb354-d444-431f-ba73-12bef4805f67.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/50bfb354-d444-431f-ba73-12bef4805f67.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/DAO/ResultDAO.java" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/DAO/ResultDAO.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/DAO/ResultDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/DAO/ResultDAOImpl.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/controller/QuizController.java" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/controller/QuizController.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/model/Quiz.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/model/Result.java" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/model/Result.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/service/AgeCalculate.java" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/util/AgeCalculate.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/service/CreateWord.java" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/util/CreateWord.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/service/CreateZip.java" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/util/CreateZip.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/service/DBService.java" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/service/DBService.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/service/DBServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/service/DBServiceImpl.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/service/PrintService.java" afterPath="$PROJECT_DIR$/src/main/java/web/quiz/service/ResultService.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/web/quiz/service/PrintServiceImpl.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/detail.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/detail.jsp" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/result.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/result.jsp" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/vote.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/vote.jsp" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/voteFailure.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/voteFailure.jsp" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/voteSuccess.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/voteSuccess.jsp" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/result.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/result.css" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Test.java" afterPath="$PROJECT_DIR$/src/test/java/Test.java" />
-      <change beforePath="$PROJECT_DIR$/target/QuizWeb/WEB-INF/jsp/result.jsp" afterPath="$PROJECT_DIR$/target/QuizWeb/WEB-INF/jsp/result.jsp" />
-      <change beforePath="$PROJECT_DIR$/target/QuizWeb/WEB-INF/jsp/vote.jsp" afterPath="$PROJECT_DIR$/target/QuizWeb/WEB-INF/jsp/vote.jsp" />
+      <change beforePath="$PROJECT_DIR$/Dump20180312.sql" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Dump20180312.sql" afterPath="$PROJECT_DIR$/Dump20180314.sql" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -110,7 +80,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QuizController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="QuizController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/web/quiz/controller/QuizController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-344">
@@ -124,6 +94,16 @@
                 <element signature="e#1846#1854#0" expanded="true" />
                 <element signature="e#1898#1906#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Dump20180314.sql" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Dump20180314.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -173,16 +153,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
               <caret line="10" column="55" lean-forward="false" selection-start-line="10" selection-start-column="55" selection-end-line="10" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ResultService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/web/quiz/service/ResultService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="14" column="9" lean-forward="false" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -410,120 +380,18 @@
             <path>
               <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
               <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="quiz" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="quiz" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="quiz" type="462c0819:PsiDirectoryNode" />
-              <item name="DAO" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="quiz" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="quiz" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="quiz" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="META-INF" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
               <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
               <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuizWeb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuizWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-              <item name="jsp" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -551,11 +419,11 @@
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
       <recent name="$PROJECT_DIR$/src/main/resources/META-INF/properties" />
       <recent name="$PROJECT_DIR$/src/main/java/web/quiz/util" />
       <recent name="$PROJECT_DIR$/src/main/webapp/resources/js" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/resources/css" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="main.service" />
@@ -917,7 +785,7 @@
       <workItem from="1520475331565" duration="30853000" />
       <workItem from="1520589122123" duration="121000" />
       <workItem from="1520657722516" duration="8948000" />
-      <workItem from="1520763200751" duration="61073000" />
+      <workItem from="1520763200751" duration="61405000" />
     </task>
     <task id="LOCAL-00001" summary="ignore">
       <created>1516004184794</created>
@@ -976,11 +844,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="359088000" />
+    <option name="totallyTimeSpent" value="359420000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1440" height="825" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3260274" sideWeight="0.38340485" order="7" side_tool="true" content_ui="tabs" />
@@ -1000,11 +867,11 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32957748" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3260274" sideWeight="0.61659515" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3260274" sideWeight="0.61659515" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2056338" sideWeight="0.47138768" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20547946" sideWeight="0.47138768" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21244635" sideWeight="0.6565041" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21244635" sideWeight="0.6565041" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21244635" sideWeight="0.34349594" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37260273" sideWeight="0.4914163" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1078,18 +945,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/TestRunWith.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#391#392#0" expanded="false" />
-            <element signature="e#435#436#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/css/switch.less">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1518,6 +1373,14 @@
             <element signature="e#1846#1854#0" expanded="true" />
             <element signature="e#1898#1906#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dump20180314.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
