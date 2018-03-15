@@ -99,9 +99,8 @@ public class QuizController {
 
         //是否过滤选票
         String checkValidate = request.getParameter("validate");
-        //CheckBox的值，如果关闭的话为null，开启的话为on。
         boolean validate = false;
-        if (checkValidate==null){
+        if (checkValidate==null || checkValidate.equals("false")){
             System.out.println("不开启过滤");
         }
         else {
@@ -113,14 +112,15 @@ public class QuizController {
         resultService.printWord(this.persons, results, this.maxOptionNum, this.ftlTemplatePath, this.wordFolderPath, validate);
         System.out.println("saveToWord Success:" + this.wordFolderPath);
 
-        //压缩Word文件夹
+        //压缩Word文件夹,存放在其上级目录
         String zipFilePath = this.wordFolderPath;
-        if (!zipFilePath.endsWith("/")){
-           zipFilePath += '/' ;
+        if (zipFilePath.endsWith("/")){
+            zipFilePath = zipFilePath.substring(0, zipFilePath.length());
         }
+        zipFilePath = zipFilePath.substring(0,zipFilePath.lastIndexOf('/') + 1);
 
         if (validate){
-            zipFilePath += "测评结果（过滤）.zip";
+            zipFilePath += "测评结果-过滤.zip";
         }
         else{
             zipFilePath += "测评结果.zip";
@@ -148,7 +148,7 @@ public class QuizController {
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment;filename=" + encodedFileName);
+        headers.add("Content-Disposition", "attachment;filename=\"" + encodedFileName + "\"; filename*=utf-8''" + encodedFileName);
         //ContentType用于定义用户的浏览器或相关设备如何显示将要加载的数据，octet-stream代表任意的二进制数据）
         //不加这一句用Safari下载时出现.html后缀
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -212,7 +212,6 @@ public class QuizController {
         String name = request.getParameter("name");
         //是否过滤选票
         String checkValidate = request.getParameter("validate");
-        //CheckBox的值，如果关闭的话为null，开启的话为on。
         boolean validate = false;
         if (checkValidate==null || checkValidate.equals("false")){
             System.out.println("不开启过滤");

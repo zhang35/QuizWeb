@@ -13,7 +13,7 @@ import java.util.zip.ZipOutputStream;
 
 public class CreateZip {
 	private static final int BUFFER_SIZE = 2 * 1024;
-	
+
 	/**
 	 * 压缩成ZIP 方法1
 	 * @param srcDir 压缩文件夹路径 
@@ -24,16 +24,16 @@ public class CreateZip {
 	 */
 	public static void toZip(String srcDir, String zipFilePath, boolean KeepDirStructure)
 			throws RuntimeException{
-		
+
 		long start = System.currentTimeMillis();
-		
+
 		FileOutputStream out = null;
 		try {
 			out = new FileOutputStream(new File(zipFilePath));
-		} catch (FileNotFoundException e) {			
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		ZipOutputStream zos = null ;
 		try {
 			zos = new ZipOutputStream(out);
@@ -51,9 +51,9 @@ public class CreateZip {
 					e.printStackTrace();
 				}
 			}
-		}		
+		}
 	}
-	
+
 	/**
 	 * 压缩成ZIP 方法2
 	 * @param srcFiles 需要压缩的文件列表
@@ -90,7 +90,7 @@ public class CreateZip {
 			}
 		}
 	}
-	
+
 	/**
 	 * 递归压缩方法
 	 * @param sourceFile 源文件
@@ -101,7 +101,7 @@ public class CreateZip {
 	 * @throws Exception
 	 */
 	private static void compress(File sourceFile, ZipOutputStream zos, String name,
-			boolean KeepDirStructure) throws Exception{
+								 boolean KeepDirStructure) throws Exception{
 		byte[] buf = new byte[BUFFER_SIZE];
 		if(sourceFile.isFile()){
 			// 向zip输出流中添加一个zip实体，构造器中name为zip实体的文件的名字
@@ -115,7 +115,8 @@ public class CreateZip {
 			// Complete the entry
 			zos.closeEntry();
 			in.close();
-		} else {
+		}
+		else {
 			File[] listFiles = sourceFile.listFiles();
 			if(listFiles == null || listFiles.length == 0){
 				// 需要保留原来的文件结构时,需要对空文件夹进行处理
@@ -125,8 +126,9 @@ public class CreateZip {
 					// 没有文件，不需要文件的copy
 					zos.closeEntry();
 				}
-				
-			}else {
+
+			}
+			else {
 				for (File file : listFiles) {
 					// 判断是否需要保留原来的文件结构
 					if (KeepDirStructure) {
@@ -136,7 +138,7 @@ public class CreateZip {
 					} else {
 						compress(file, zos, file.getName(),KeepDirStructure);
 					}
-					
+
 				}
 			}
 		}

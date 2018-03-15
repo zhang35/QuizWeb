@@ -53,6 +53,14 @@
             //调用
             CanvasParticle(config);
         };
+
+        function allSelectOne() {
+            var radios = $(".custom-radio");
+            for (r in radios){
+                console.log(r);
+            }
+            // $("#").prop('checked',true);
+        };
     </script>
 </head>
 <body>

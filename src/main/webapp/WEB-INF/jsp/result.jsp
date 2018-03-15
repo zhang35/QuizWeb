@@ -109,6 +109,7 @@
 		</c:forEach>
 		</tbody>
 	</table>
+	<p>过滤废票：<input type="checkbox" name="validate" data-toggle="switch" id="custom-switch-02" /></p>
 	<p>点击姓名，查看详细结果</p>
     <hr />
 	<p>已投票总人数：<span id="totalVoterNum"></span></p>
@@ -118,11 +119,7 @@
     <p>导出结果为Word文档：</p>
     <%--<a href="javascript:;" onclick="fileDownload();" class="btn-primary btn-lg">下载文件</a>--%>
 	<%--<a href="fileDownload" class="btn-primary btn-lg">下载文件</a>--%>
-   <form action="fileDownload" method="POST">
-	   <button type="submit" class="btn-primary btn-lg">下载文件</button>
-	   <span id="switch"><input type="checkbox" name="validate" data-toggle="switch" id="custom-switch-02" />&nbsp;过滤废票</span>
-   </form>
-
+   <a href="javascript:;" onclick="StandardPost('fileDownload', null);" class="btn-primary btn-lg">下载文件</a>
 </div>
 
 </body>

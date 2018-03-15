@@ -53,6 +53,14 @@
             //调用
             CanvasParticle(config);
         };
+
+        function allSelectOne() {
+            var radios = $(".custom-radio");
+            for (r in radios){
+                console.log(r);
+            }
+            // $("#").prop('checked',true);
+        };
     </script>
 </head>
 <body>
@@ -63,6 +71,7 @@
        <p>您好！感谢您对单位工作的支持，希望您在百忙之中能认真如实填写。</p>
         <p>（注：所有参评人的总评优秀率不超过80%，否则将视为无效）</p>
         <p class="intro">XX处XX办</p>
+        <button onclick="allSelectOne();">test</button>
     </div>
 </div>
 <ul id="nav">
@@ -85,7 +94,7 @@
                                 <span class="questionSpan">${title}</span>
                                 <c:forEach items="${options[tStatus.count-1]}" var="option" varStatus="oStatus">
                                     <label class="radio myLable" for="radio${nStatus.count}.${tStatus.count}.${oStatus.count}" >
-                                        <input type="radio" name="option${nStatus.count}.${tStatus.count}" value="${oStatus.count-1}" id="radio${nStatus.count}.${tStatus.count}.${oStatus.count}" data-toggle="radio" class="custom-radio" required checked/>
+                                        <input type="radio" name="option${nStatus.count}.${tStatus.count}" value="${oStatus.count-1}" id="radio${nStatus.count}.${tStatus.count}.${oStatus.count}" data-toggle="radio" class="custom-radio" required/>
                                         <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
                                             ${option}
                                     </label>
