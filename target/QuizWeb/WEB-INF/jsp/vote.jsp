@@ -52,8 +52,7 @@
 
             //调用
             CanvasParticle(config);
-        }
-
+        };
     </script>
 </head>
 <body>

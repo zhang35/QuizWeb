@@ -13,7 +13,7 @@ public interface ResultService {
     int[][][] doStatistics(List<Result> results, int maxOptionNum, boolean validate);
 
     void printWord(List<Person> persons, List<Result> results, int maxOptionNum, String ftlTemplatePath, String folderPath, boolean validate);
-
+    boolean checkValidVote(String voteResults);
     //参数folderpath：待压缩文件夹路径
     //参数zipFilePath：zip文件保存路径
     void createZip(String folderPath, String zipFilePath);

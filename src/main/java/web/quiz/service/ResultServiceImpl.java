@@ -13,15 +13,56 @@ import java.util.Map;
 
 @Service
 public class ResultServiceImpl implements ResultService {
+    public boolean checkValidVote(String voteResults){
+        //传入结果形式            "02……120#11……000#……#" 注：#分割各受测评对象的成绩。
+
+        //截取对单个人的测评结果
+        String[] strs = voteResults.trim().split("#");
+
+        // Len：总的测评项数；
+        // toltal_num_Exellent：全体受测评对象总评为优秀的数量。
+        int Len = strs[0].length();
+        int toltal_num_Exellent = 0;
+
+        //对规则前两项进行判断
+        for(int i=0; i<strs.length; i++){
+            //num_Exellent：受测评对象测评项为优秀的数量；num_Inept：受测评对象测评项为不称职的数量；
+            int num_Inept = 0;
+            int num_Exellent = 0;
+
+            for(int j=0; j<Len-1; j++){
+                if(strs[i].charAt(j) == '0') { num_Exellent++; }
+                if(strs[i].charAt(j) == '2') { num_Inept++; }
+            }
+
+            if(strs[i].charAt(Len-1) == '0') {
+                //规则1
+                if(num_Exellent/((Len-1)*1.0) < 0.9) {
+                    System.out.println("违反规则1，废票");
+                    return false;
+                }
+                toltal_num_Exellent++;
+            }
+            //规则2
+            if((num_Inept > 0) && (strs[i].charAt(Len-1) != '2')) {
+                System.out.println("违反规则2，废票");
+                return false;
+            }
+        }
+        //规则3
+        if(toltal_num_Exellent/(strs.length*1.0) > 0.8) {
+            System.out.println("违反规则3，废票");
+            return false;
+        }
+        //合法票
+        System.out.println("有效票");
+        return true;
+    }
 
 	public int getValideVoteNum(List<Result> results, boolean validate){
 		int num_of_val = 0;
-
 		for (Result result : results){
-		    //若未开启过滤validate直接统计，若开启了过滤，再看票是否合法
-			//java的||运算符从左到右运算
-			if(!validate || FindInvalidVote.isValidVote(result.getScoreStr())){
-				//若进行不合法票筛选并且所筛选票不合法，则不对该票进行统计。
+			if(result.isValidate()){
 				num_of_val++;
 			}
 		}
@@ -56,7 +97,7 @@ public class ResultServiceImpl implements ResultService {
 		for (Result result : results){
 			//若未开启过滤validate直接统计，若开启了过滤，再看票是否合法
 			//java的||运算符从左到右运算
-			if(!validate || FindInvalidVote.isValidVote(result.getScoreStr())){
+			if(!validate || result.isValidate()){
 				//若进行不合法票筛选并且所筛选票不合法，则不对该票进行统计。
 				for(int j=0; j<P_NUM; j++){
 					for(int k=0; k<Q_NUM; k++){
@@ -147,6 +188,9 @@ public class ResultServiceImpl implements ResultService {
             String finalPath = "";
             //将不同部门的人员分文件夹存储
             /*存在问题（BUG）：同一部门同名人员将无法同时输出*/
+            if (!folderPath.endsWith("/")){
+                folderPath += "/";
+            }
             if(p.getDepartment() == null || p.getDepartment() == ""){
                 finalPath = folderPath + "其他/";
             }else{
