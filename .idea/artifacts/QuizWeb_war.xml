@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="war" build-on-make="true" name="QuizWeb:war">
-    <output-path>/usr/local/apache-tomcat-9.0.2/webapps</output-path>
+    <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="QuizWeb.war">
       <element id="artifact" artifact-name="QuizWeb:war exploded" />
     </root>

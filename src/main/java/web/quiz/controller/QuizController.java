@@ -1,4 +1,6 @@
 package web.quiz.controller;
+import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility;
+import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.*;
 
 import web.quiz.service.DBService;
@@ -117,10 +120,10 @@ public class QuizController {
         }
 
         if (validate){
-            zipFilePath += "results(filtrated).zip";
+            zipFilePath += "测评结果（过滤）.zip";
         }
         else{
-            zipFilePath += "results.zip";
+            zipFilePath += "测评结果.zip";
         }
         resultService.createZip(wordFolderPath, zipFilePath);
         System.out.println("createZip Success:" + zipFilePath);
@@ -132,8 +135,20 @@ public class QuizController {
         byte[] body = new byte[is.available()];
         int bytes = is.read(body);
         System.out.println("读取字节数：" + bytes);
+
+        //文件名编码，解决乱码问题
+        String fileName = file.getName();
+        String encodedFileName = null;
+        String userAgentString = request.getHeader("User-Agent");
+        String browser = UserAgent.parseUserAgentString(userAgentString).getBrowser().getGroup().getName();
+        if(browser.equals("Chrome") || browser.equals("Internet Exploer") || browser.equals("Safari")) {
+            encodedFileName = URLEncoder.encode(fileName,"utf-8").replaceAll("\\+", "%20");
+        } else {
+            encodedFileName = MimeUtility.encodeWord(fileName);
+        }
+
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment;filename=" + file.getName());
+        headers.add("Content-Disposition", "attachment;filename=" + encodedFileName);
         //ContentType用于定义用户的浏览器或相关设备如何显示将要加载的数据，octet-stream代表任意的二进制数据）
         //不加这一句用Safari下载时出现.html后缀
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
