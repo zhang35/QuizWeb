@@ -62,7 +62,7 @@ public class ResultServiceImpl implements ResultService {
 	public int getValideVoteNum(List<Result> results, boolean validate){
 		int num_of_val = 0;
 		for (Result result : results){
-			if(result.isValidate()){
+			if(!validate || result.isValidate()){
 				num_of_val++;
 			}
 		}
@@ -185,16 +185,16 @@ public class ResultServiceImpl implements ResultService {
                 }
             }
 
-            String finalPath = "";
+            String finalPath = folderPath;
             //将不同部门的人员分文件夹存储
             /*存在问题（BUG）：同一部门同名人员将无法同时输出*/
-            if (!folderPath.endsWith("/")){
-                folderPath += "/";
+            if (!finalPath.endsWith("/")){
+               finalPath += '/';
             }
             if(p.getDepartment() == null || p.getDepartment() == ""){
-                finalPath = folderPath + "其他/";
+                finalPath += "其他/";
             }else{
-                finalPath = folderPath + p.getDepartment() + "/";
+                finalPath += p.getDepartment() + "/";
             }
             String fileName = p.getName() + ".doc";
             CreateWord cw = new CreateWord(ftlTemplatePath, finalPath, fileName, date);
