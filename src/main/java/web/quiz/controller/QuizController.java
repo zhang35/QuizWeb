@@ -108,18 +108,22 @@ public class QuizController {
 
         //保存结果为Word
         resultService.printWord(this.persons, results, this.maxOptionNum, this.ftlTemplatePath, this.wordFolderPath, validate);
-        System.out.println("saveToWord Success");
+        System.out.println("saveToWord Success:" + this.wordFolderPath);
 
         //压缩Word文件夹
-        String zipFilePath;
+        String zipFilePath = this.wordFolderPath;
+        if (!zipFilePath.endsWith("/")){
+           zipFilePath += '/' ;
+        }
+
         if (validate){
-            zipFilePath = this.wordFolderPath + "/results(filtrated).zip";
+            zipFilePath += "results(filtrated).zip";
         }
         else{
-            zipFilePath = this.wordFolderPath + "/results.zip";
+            zipFilePath += "results.zip";
         }
         resultService.createZip(wordFolderPath, zipFilePath);
-        System.out.println("createZip Success");
+        System.out.println("createZip Success:" + zipFilePath);
 
         //提供下载zip文件
         File file;
@@ -252,6 +256,7 @@ public class QuizController {
         //记录IP
         result.setIp(ip);
         result.setScoreStr(scoreStr);
+        result.setValidate(resultService.checkValidVote(scoreStr));
         //将成绩写入数据库中
         dbService.saveOrUpdateResult(result);
 

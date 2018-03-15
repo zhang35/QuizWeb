@@ -55,7 +55,7 @@
         }
         function resetIPs() {
             if ($('#currentVoterNum').text()=='0'){
-                alert("开放成功！");
+                alert("开放成功！！！");
 			}
 			else {
                 $.ajax({

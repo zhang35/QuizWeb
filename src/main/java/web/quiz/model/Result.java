@@ -12,6 +12,15 @@ public class Result {
     private String id;
     private String ip;
     private String scoreStr;
+    private boolean validate;
+
+    public boolean isValidate() {
+        return validate;
+    }
+
+    public void setValidate(boolean validate) {
+        this.validate = validate;
+    }
 
     public String getIp() {
         return ip;

@@ -996,29 +996,35 @@
       <DataType>varchar(2550)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="247" parent="230" name="PRIMARY">
+    <column id="247" parent="230" name="validate">
+      <Position>4</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="248" parent="230" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="248" parent="231" name="id">
+    <column id="249" parent="231" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="249" parent="231" name="title">
+    <column id="250" parent="231" name="title">
       <Position>2</Position>
       <DataType>varchar(500)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="250" parent="231" name="options">
+    <column id="251" parent="231" name="options">
       <Position>3</Position>
       <DataType>varchar(500)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="251" parent="231" name="PRIMARY">
+    <key id="252" parent="231" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
