@@ -43,7 +43,7 @@
                 form.append(input);
             }
 
-            var validate = $("#custom-switch-02").prop("checked");
+            var validate = $("#validate-switch").prop("checked");
             var input = $("<input type='hidden'>");
             input.attr({"name": "validate"});
             input.val(validate);
@@ -87,7 +87,34 @@
                     $('#currentVoterNum').text(data.currentVoterNum);
                 }
             });
-        }
+        };
+
+        function openIP() {
+        // •对于HTML元素本身就带有的固有属性，在处理时，使用prop方法。
+        // •对于HTML元素我们自己自定义的DOM属性，在处理时，使用attr方法。
+			var openIP = $("#openIP-switch").prop('checked');
+            if (openIP==true){
+                $("#resetIP").prop('disabled', true);
+            }
+            else {
+                $("#resetIP").prop('disabled', false);
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "openIP",
+                async: false,
+                data: {
+                    "openIP" : openIP
+                },
+                dataType: 'text',
+                success: function (data) {
+                },
+				error: function () {
+					alert("发送请求失败");
+                }
+            });
+        };
 	</script>
 </head>
 <body>
@@ -109,17 +136,18 @@
 		</c:forEach>
 		</tbody>
 	</table>
-	<p>过滤废票：<input type="checkbox" name="validate" data-toggle="switch" id="custom-switch-02" /></p>
 	<p>点击姓名，查看详细结果</p>
     <hr />
 	<p>已投票总人数：<span id="totalVoterNum"></span></p>
 	<p>本轮投票人数：<span id="currentVoterNum"></span></p>
-	<a href="javascript:;" onclick="resetIPs();" class="btn-primary btn-lg">开放投票</a>
+	<button id="resetIP" href="javascript:;" onclick="resetIPs();" class="btn-primary btn-lg">开放投票</button>
+	<span class="switchSpan">无限投票：<input onchange="openIP();" type="checkbox" data-toggle="switch" name="openIP" id="openIP-switch" /></span>
 	<hr />
     <p>导出结果为Word文档：</p>
     <%--<a href="javascript:;" onclick="fileDownload();" class="btn-primary btn-lg">下载文件</a>--%>
 	<%--<a href="fileDownload" class="btn-primary btn-lg">下载文件</a>--%>
-   <a href="javascript:;" onclick="StandardPost('fileDownload', null);" class="btn-primary btn-lg">下载文件</a>
+	<button onclick="StandardPost('fileDownload', null);" class="btn-primary btn-lg">下载文件</button>
+	<span class="switchSpan">过滤废票：<input type="checkbox" name="validate" data-toggle="switch" id="validate-switch"/></span>
 </div>
 
 </body>

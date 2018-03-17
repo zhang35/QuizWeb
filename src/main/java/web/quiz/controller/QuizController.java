@@ -26,12 +26,13 @@ import web.quiz.service.ResultService;
 
 @Controller
 public class QuizController {
+    //spring自动装载
     @Resource
     private DBService dbService;
-
     @Resource
     private ResultService resultService;
 
+    //properties属性，自动赋值
     @Value("${pass}")
     private String pass;
     @Value("${ftlTemplatePath}")
@@ -41,8 +42,12 @@ public class QuizController {
     @Value("${maxOptionNum}")
     private int maxOptionNum;
 
+    //在initQuiz中初始化，之后禁止写操作
     private List<Question> questions;
     private List<Person> persons;
+
+    //是否防止重复投票
+    private boolean openIP;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String defaultPage() {
@@ -56,12 +61,11 @@ public class QuizController {
 
     @RequestMapping(value = "/vote", method = RequestMethod.GET)
     public ModelAndView vote(HttpServletRequest request, ModelMap model) {
-        //一个IP只能投一次
-        String ip = request.getRemoteAddr();
-        if (dbService.containsIP(ip)){
+
+        //openIP未开启时，一个IP只能投一次
+        if (!openIP && dbService.containsIP(request.getRemoteAddr())){
             return new ModelAndView("voteFailure");
         }
-
 
         List<String> names = new ArrayList<String>();
         List<String> ids = new ArrayList<String>();
@@ -71,11 +75,11 @@ public class QuizController {
         }
 
         int questionNum = this.questions.size();
-        String options[][] = new String[questionNum][this.maxOptionNum];
-        String questionTitles[] = new String[questionNum];
-        for (int i=0; i<questionNum; i++) {
-            options[i] = this.questions.get(i).getOptions().split("#");
-            questionTitles[i] = this.questions.get(i).getTitle();
+        List<List<String>> options = new ArrayList<List<String>>();
+        List<String> questionTitles = new ArrayList<String>();
+        for (Question q : this.questions){
+           options.add(Arrays.asList(q.getOptions().split("#")));
+           questionTitles.add(q.getTitle());
         }
 
         model.addAttribute("names", names);
@@ -193,6 +197,22 @@ public class QuizController {
         return "resetIP success";
     }
 
+    @RequestMapping(value = "/openIP", method = RequestMethod.POST)
+    @ResponseBody
+    public String openIP(HttpServletRequest request){
+        //是否过滤选票
+        String checkValidate = request.getParameter("openIP");
+        if (checkValidate==null || checkValidate.equals("false")){
+            this.openIP = false;
+            System.out.println("限制IP");
+        }
+        else {
+            this.openIP = true;
+            System.out.println("无限IP");
+        }
+        return "openIP switch success";
+    }
+
     @RequestMapping(value = "/getVoterNum", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> getVoterNum(){
@@ -243,9 +263,8 @@ public class QuizController {
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String submit(HttpServletRequest request) {
-        //一个IP只能投一次
-        String ip = request.getRemoteAddr();
-        if (dbService.containsIP(ip)){
+        //openIP未开启时，一个IP只能投一次
+        if (!openIP && dbService.containsIP(request.getRemoteAddr())){
             return "voteFailure";
         }
 
@@ -268,7 +287,7 @@ public class QuizController {
         //生成新的Result对象
         Result result = new Result();
         //记录IP
-        result.setIp(ip);
+        result.setIp(request.getRemoteAddr());
         result.setScoreStr(scoreStr);
         result.setValidate(resultService.checkValidVote(scoreStr));
         //将成绩写入数据库中
@@ -292,6 +311,8 @@ public class QuizController {
         System.out.println("人数:" + persons.size());
         System.out.println("题目数：" + questions.size());
 
+        //默认为限制重复投票
+        this.openIP = false;
         //每次重新启动网站时清空IP
         dbService.resetIP();
     }

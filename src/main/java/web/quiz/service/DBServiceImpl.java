@@ -67,8 +67,11 @@ public class DBServiceImpl implements DBService{
     public void resetIP() {
         List<Result> results = resultDAO.getAll();
         for (Result result : results){
-            //ip后加*，以脱离containsIP的查询。*的个数代表重置IP的次数。
-            result.setIp(result.getIp() + '*');
+            //ip后加*，以脱离containsIP的查询
+            String ip = result.getIp();
+            if (!ip.endsWith("*")){
+                result.setIp(ip + '*');
+            }
             resultDAO.saveOrUpdate(result);
         }
     }
