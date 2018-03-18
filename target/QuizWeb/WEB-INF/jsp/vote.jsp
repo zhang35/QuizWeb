@@ -38,16 +38,16 @@
             var config = {
                 vx: 4,	//小球x轴速度,正为右，负为左
                 vy: 4,	//小球y轴速度
-                height: 2,	//小球高宽，其实为正方形，所以不宜太大
+                height: 2, //小球高宽，其实为正方形，所以不宜太大
                 width: 2,
-                count: 200,		//点个数
+                count: 500,		//点个数
                 // color: "121, 162, 185", 	//点颜色
                 // stroke: "130,255,255", 		//线条颜色
                 color: "121, 162, 185", 	//点颜色
                 stroke: "130,255,255", 		//线条颜色
                 dist: 6000, 	//点吸附距离
                 e_dist: 20000, 	//鼠标吸附加速距离
-                max_conn: 10 	//点到点最大连接数
+                max_conn: 15 	//点到点最大连接数
             }
 
             //调用
@@ -96,51 +96,51 @@
                 if(strs.charAt(questionNum-1) == '1') {
                     //规则1
                     if(num_Exellent/((questionNum-1)*1.0) < 0.9) {
-                       return confirm("违反规则1：单项总优秀率高于90%的，总评才能定为优秀。将视为无效票，仍要提交吗？");
+                        return confirm("违反规则1：单项总优秀率高于90%的，总评才能定为优秀。将视为无效票，仍要提交吗？");
                     }
                     toltal_num_Exellent++;
                 }
                 //规则2
                 if((num_Inept > 0) && (strs.charAt(questionNum-1) != '3')) {
-                   return confirm("违反规则2：有一个单项为不称职的，总评即为不称职。将视为无效票，仍要提交吗？");
+                    return confirm("违反规则2：有一个单项为不称职的，总评即为不称职。将视为无效票，仍要提交吗？");
                 }
             }
             //规则3
             if(toltal_num_Exellent/(personNum*1.0) > 0.8) {
-              return confirm("违反规则3：所有参评人的总评优秀率不超过80%。将视为无效票，仍要提交吗？");
+                return confirm("违反规则3：所有参评人的总评优秀率不超过80%。将视为无效票，仍要提交吗？");
             }
             //合法票
-           console.log("有效票");
+            console.log("有效票");
             return true;
         };
 
         function submitForm() {
-           if (checkValidate()) {
-               $("#btnSubmit").click();
-           }
+            if (checkValidate()) {
+                $("#btnSubmit").click();
+            }
         }
 
     </script>
 </head>
 <body>
-<div class="container">
-    <h3 class="headline">民主测评</h3>
-    <div class="notice">
-        <p>亲爱的XX：</p>
-        <p>您好！感谢您对单位工作的支持，希望您在百忙之中能认真如实填写。同时请注意以下投票规则，以防投票作废：</p>
-        <p>1、单项总优秀率高于90%的，总评才能定为优秀；</p>
-            <p>2、有一个单项为不称职的，总评即为不称职；</p>
-        <p>3、所有参评人的总评优秀率不超过80%。</p>
-        <p class="intro">XX处XX办</p>
-    </div>
-</div>
-<ul id="nav">
-    <c:forEach items="${names}" var="name" varStatus="nStatus">
-        <li><a href="#section${nStatus.count}">${name}</a></li>
-    </c:forEach>
-</ul>
 <%--粒子特效作用范围mydiv--%>
-<div id="mydiv" style="height:1000px;">
+<div id="mydiv" style="height:2000px;">
+    <div class="container">
+        <h3 class="headline">民主测评</h3>
+        <div class="notice">
+            <p>亲爱的XX：</p>
+            <p>您好！感谢您对单位工作的支持，希望您在百忙之中能认真如实填写。同时请注意以下投票规则，以防投票作废：</p>
+            <p>1、单项总优秀率高于90%的，总评才能定为优秀；</p>
+            <p>2、有一个单项为不称职的，总评即为不称职；</p>
+            <p>3、所有参评人的总评优秀率不超过80%。</p>
+            <p class="intro">XX处XX办</p>
+        </div>
+    </div>
+    <ul id="nav">
+        <c:forEach items="${names}" var="name" varStatus="nStatus">
+            <li><a href="#section${nStatus.count}">${name}</a></li>
+        </c:forEach>
+    </ul>
     <div class="container">
         <div class="form-group">
             <button style="float: right;" class="btn-primary btn-lg" onclick="allSelectOne();">一键全优</button>
