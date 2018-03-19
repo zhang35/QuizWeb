@@ -1,7 +1,7 @@
 # QuizWeb
 A web Application for quiz or questionnaire survey. Made by Spring + SpringMVC + Hibernate 
 
-##使用说明：
+## 使用说明：
 1、部署war文件：
 
 QuizWeb/QuizWeb1.0.war
@@ -15,8 +15,10 @@ QuizWeb/src/main/resources/META-INF/properties/*
 QuizWeb/Dump20180318.sql
 
 ## 功能介绍：
-### 1. 前端（用户界面）
+### 1. 前端
 1.1 打开首页，点击进入投票页面。
+![ios视觉差效果（飞机在飞有木有）](https://upload-images.jianshu.io/upload_images/6240664-ed7d33ae875b4cdd.gif?imageMogr2/auto-orient/strip)
+![粒子效果](https://upload-images.jianshu.io/upload_images/6240664-272909d0be7b7a58.gif?imageMogr2/auto-orient/strip)
 
 1.2 提供侧边导航：
 ![导航栏](https://upload-images.jianshu.io/upload_images/6240664-be9d05fec3600f0d.gif?imageMogr2/auto-orient/strip)
@@ -33,7 +35,7 @@ QuizWeb/Dump20180318.sql
 再次投票会提示：
 ![投票失败](https://upload-images.jianshu.io/upload_images/6240664-496c8632d3680af2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600)
 
-### 2. 后端（管理员界面）
+### 2. 后端
 2.1 输入密码，登录后台：
 ![登录界面](https://upload-images.jianshu.io/upload_images/6240664-a93c7364642fbd62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/650)
 ![管理员界面](https://upload-images.jianshu.io/upload_images/6240664-b575da380c0ca4a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
