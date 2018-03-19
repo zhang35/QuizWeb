@@ -14,11 +14,9 @@ QuizWeb/src/main/resources/META-INF/properties/*
 
 QuizWeb/Dump20180318.sql
 
-##功能介绍：
-###1. 前端（用户界面）
-1.1 打开首页，点击进入投票页面。加了些jQuery美化插件：
-![ios视觉差效果（飞机在飞有木有）](https://upload-images.jianshu.io/upload_images/6240664-ed7d33ae875b4cdd.gif?imageMogr2/auto-orient/strip)
-![粒子效果](https://upload-images.jianshu.io/upload_images/6240664-272909d0be7b7a58.gif?imageMogr2/auto-orient/strip)
+## 功能介绍：
+### 1. 前端（用户界面）
+1.1 打开首页，点击进入投票页面。
 
 1.2 提供侧边导航：
 ![导航栏](https://upload-images.jianshu.io/upload_images/6240664-be9d05fec3600f0d.gif?imageMogr2/auto-orient/strip)
@@ -35,10 +33,11 @@ QuizWeb/Dump20180318.sql
 再次投票会提示：
 ![投票失败](https://upload-images.jianshu.io/upload_images/6240664-496c8632d3680af2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600)
 
-###2. 后端（管理员界面）
+### 2. 后端（管理员界面）
 2.1 输入密码，登录后台：
 ![登录界面](https://upload-images.jianshu.io/upload_images/6240664-a93c7364642fbd62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/650)
 ![管理员界面](https://upload-images.jianshu.io/upload_images/6240664-b575da380c0ca4a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 2.2 功能区如下：
 ![功能区](https://upload-images.jianshu.io/upload_images/6240664-1fbe4e1246c55049.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 - 每2s实时更新投票情况。
@@ -49,6 +48,7 @@ QuizWeb/Dump20180318.sql
 
 2.3 点击人名，查看结果。如果打开“过滤废票”开关，会显示去除废票后的结果：
 ![查看详细结果](https://upload-images.jianshu.io/upload_images/6240664-b5daecc9202dc003.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 2.4 下载结果。如果打开“过滤废票”开关，会得到去除废票后的结果：
 ![下载得到“测评结果.zip”文件](https://upload-images.jianshu.io/upload_images/6240664-ffa1f989c5bc0ebf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720)
 ![解压得到按部门分类目录结构](https://upload-images.jianshu.io/upload_images/6240664-5cc47f3b23179c99.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
