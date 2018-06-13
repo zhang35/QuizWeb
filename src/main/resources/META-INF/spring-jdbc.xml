@@ -17,7 +17,7 @@
               <!-- MySQL5 -->
               <property name="driverClass" value="${driverClassName}"></property>
               <property name="jdbcUrl" value="${url}"></property>
-              <property name="user" value="${userName}"></property>
+              <property name="user" value="${mysqlUser}"></property>
               <property name="password" value="${password}"></property>
        </bean>
 
